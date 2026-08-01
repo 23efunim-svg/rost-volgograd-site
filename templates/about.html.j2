@@ -1,0 +1,105 @@
+{% extends "base.html.j2" %}
+{% from "_macros.html.j2" import form_block %}
+{% set h = content.home %}
+
+{% block content %}
+<section class="section section--dark" style="padding-bottom:calc(var(--section-y) * .55)">
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Хлебные крошки"><a href="/">Главная</a><span>/</span>О компании</nav>
+    <p class="eyebrow">( Волгоград, с 2000 года )</p>
+    <h1 class="measure" style="margin-bottom:1.3rem">Работаем в Волгограде двадцать шесть лет и держим склад вместе с бригадами</h1>
+    <div class="lightline" style="margin-bottom:1.5rem"></div>
+    <p class="measure mut">РЕМОПТСТРОЙТОРГ делает строительно-ремонтные работы и продаёт стройматериалы. Обычно это два разных бизнеса и два разных счёта. У нас это одна компания, поэтому объём материала считается сразу под объект, а в смете видно, за что вы платите.</p>
+  </div>
+</section>
+
+<section class="section section--dark" style="padding-top:0">
+  <div class="wrap">
+    <div class="nums">
+      {% for n in h.nums['items'] %}
+      <div><b>{{ n.b }}</b><span>{{ n.s }}</span><small>{{ n.note }}</small></div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section section--paper">
+  <div class="wrap">
+    <div class="grid" style="grid-template-columns:1.15fr .85fr;gap:clamp(1.5rem,1rem+3vw,4rem);align-items:start">
+      <div class="prose">
+        <p class="eyebrow">( Чем занимаемся )</p>
+        <h2 style="margin-top:0">Два направления, которые усиливают друг друга</h2>
+        <p>Первое направление, строительство и ремонт: дом с нуля, ремонт квартиры, коммерческое помещение, инженерные сети, кровля, забор и участок. Второе, продажа стройматериалов: электрика, сантехника, кровля, металлопрокат, утеплители, сухие смеси, отделка.</p>
+        <p>Материалы можно купить отдельно, без работ. Ремонт можно заказать отдельно, со своим материалом. Чаще берут вместе: тогда количество считается под конкретный объект, а не по средним нормам.</p>
+
+        <h2>Как мы работаем с деньгами</h2>
+        <p>Смета составляется до начала работ, вместе с ценами по каждой позиции. Скрытых платежей в ней нет, это правило компании с самого начала. Для организаций выставляем счёт и работаем по безналу.</p>
+
+        <h2>Что остаётся у заказчика после сдачи</h2>
+        <ul>
+          {% for g in site.guarantees %}<li>{{ g }}</li>{% endfor %}
+        </ul>
+
+        <h2>Где мы находимся</h2>
+        <p>База и офис: {{ site.office.address }}. {{ site.office.how_to_find }}. Работаем по Волгограду и Волгоградской области.</p>
+      </div>
+
+      <aside>
+        <div class="lead-form">
+          <h3>Реквизиты</h3>
+          <p>Проверить, кому вы платите, можно до подписания договора.</p>
+          <ul class="worklist" style="grid-template-columns:1fr">
+            <li>{{ site.legal.name }}</li>
+            <li>ОГРНИП {{ site.legal.ogrnip }}</li>
+            <li>ИНН {{ site.legal.inn }}</li>
+            <li>{{ site.legal.address_legal }}</li>
+            <li>{{ site.legal.bank }}</li>
+          </ul>
+          <a class="btn btn--ghost btn--wide" href="/kontakty/" style="margin-top:1.4rem">Все контакты и схема проезда</a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="section section--dark">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">( Как проходит работа )</p>
+      <h2 class="measure">Пять шагов от звонка до подписанного акта</h2>
+    </div>
+    <div class="steps">
+      {% for st in site.process %}
+      <div class="steps__item"><span class="steps__n"></span><div><h3>{{ st.title }}</h3><p>{{ st.text }}</p></div></div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section section--sand">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">( {{ h.quotes.eyebrow }} )</p>
+      <h2 class="measure">{{ h.quotes.h2 }}</h2>
+      <p class="measure">{{ h.quotes.lead }}</p>
+    </div>
+    <div class="quotes">
+      {% for q in h.quotes['items'] %}
+      <div class="quote"><p>{{ q.text }}</p><cite>{{ q.cite }}</cite></div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section section--dark" id="zayavka">
+  <div class="wrap cta-band">
+    <div>
+      <p class="eyebrow">( Следующий шаг )</p>
+      <h2 style="margin-bottom:1rem">{{ h.cta.h2 }}</h2>
+      <div class="lightline" style="margin-bottom:1.5rem"></div>
+      <p class="measure-s mut">{{ h.cta.lead }}</p>
+    </div>
+    {{ form_block('about', 'Вызвать замерщика', 'Оставьте телефон, менеджер перезвонит в рабочее время и договорится об удобном времени.', 'Вызвать замерщика', 'О компании') }}
+  </div>
+</section>
+{% endblock %}

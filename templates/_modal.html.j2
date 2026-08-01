@@ -1,0 +1,14 @@
+{% from "_macros.html.j2" import form_block %}
+<div class="modal" data-modal-box role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal__bg" data-modal-close></div>
+  <div class="modal__box">
+    <button class="modal__close" type="button" data-modal-close aria-label="Закрыть">×</button>
+    {{ form_block(
+        'modal',
+        'Вызвать замерщика',
+        'Оставьте телефон. Менеджер перезвонит в рабочее время, уточнит объект и договорится об удобном времени. Консультация бесплатная и ни к чему не обязывает.',
+        'Вызвать замерщика',
+        'Модальное окно'
+    ) }}
+  </div>
+</div>

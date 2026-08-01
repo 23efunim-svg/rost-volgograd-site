@@ -1,0 +1,107 @@
+{% extends "base.html.j2" %}
+{% from "_macros.html.j2" import form_block %}
+
+{% block content %}
+{% set photo_slug = svc.photos_from[0] %}
+{% set photo = objects[photo_slug].photos[2] if objects[photo_slug].photos | length > 2 else objects[photo_slug].photos[0] %}
+
+<section class="hero">
+  <div class="hero__media">
+    <img src="/assets/photo/objects/{{ photo_slug }}/{{ photo.name }}.webp" alt="" width="1200" height="1600" fetchpriority="high">
+  </div>
+  <div class="wrap hero__inner" style="padding-top:1rem">
+    <nav class="crumbs" aria-label="Хлебные крошки"><a href="/">Главная</a><span>/</span><a href="/uslugi/">Услуги</a><span>/</span>{{ svc.nav }}</nav>
+    <p class="hero__eyebrow">( Волгоград <b>и область</b> )</p>
+    <h1 style="max-width:20ch">{{ svc.h1 }}</h1>
+    <div class="lightline" style="margin:1.4rem 0 1.6rem"></div>
+    <p class="hero__lead">{{ svc.lead }}</p>
+    <div class="hero__acts">
+      <button class="btn btn--primary" type="button" data-modal="svc">Вызвать замерщика</button>
+      <a class="btn btn--ghost" href="tel:{{ site.phones.primary.tel }}">{{ site.phones.primary.display }}</a>
+    </div>
+  </div>
+</section>
+
+<section class="section section--paper">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">( Состав работ )</p>
+      <h2 class="measure">Что входит в это направление</h2>
+      <p class="measure">Берём и весь список целиком, и отдельную работу из него. Если объём небольшой, скажите объект, посчитаем по факту.</p>
+    </div>
+    <ul class="worklist">
+      {% for w in svc.works %}<li>{{ w }}</li>{% endfor %}
+    </ul>
+  </div>
+</section>
+
+{% if svc.price_ref == 'remont' %}
+<section class="section section--sand">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">( Цены )</p>
+      <h2 class="measure">Сколько стоит за квадратный метр</h2>
+      <p class="measure">{{ services.price_tables.remont.note }}</p>
+    </div>
+    <div class="price">
+      {% for lv in services.price_tables.remont.levels %}
+      <div class="price__card{% if lv.key == 'standart' %} price__card--hot{% endif %}">
+        <div class="price__name">{{ lv.name }}</div>
+        <p class="price__desc">{{ lv.desc }}</p>
+        <ul class="price__rows">
+          {% for r in lv.rows %}<li><span>{{ r.label }}</span><b>от {{ r.price | money }} ₽/м²</b></li>{% endfor %}
+        </ul>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<section class="section section--dark">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">( Наши объекты )</p>
+      <h2 class="measure">Как это выглядит в работе</h2>
+    </div>
+    <div class="works">
+      {% for slug in svc.photos_from[:3] %}
+      {% set o = objects[slug] %}
+      <a class="work reveal" href="/raboty/{{ slug }}/">
+        <img src="/assets/photo/objects/{{ slug }}/{{ o.photos[1].name }}-thumb.webp" alt="{{ o.title }}" loading="lazy" width="720" height="960">
+        <span class="work__idx">( {{ '%02d' % loop.index }} )</span>
+        <div class="work__meta"><h3>{{ o.title }}</h3><p>{{ objects_meta.objects[slug].type }}</p></div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section section--paper">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">( Материалы )</p>
+      <h2 class="measure">Материал на эту работу можно взять у нас же</h2>
+      <p class="measure">Считаем количество под объект и собираем комплект целиком. Цену и наличие называем на день обращения: металл, кабель и смеси переоцениваются каждую неделю.</p>
+    </div>
+    <div class="chips">
+      {% for c in catalog.categories %}<a href="/stroymaterialy/{{ c.slug }}/">{{ c.name }}</a>{% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section section--dark" id="zayavka">
+  <div class="wrap cta-band">
+    <div>
+      <p class="eyebrow">( Следующий шаг )</p>
+      <h2 style="margin-bottom:1rem">Посчитаем ваш объект</h2>
+      <div class="lightline" style="margin-bottom:1.5rem"></div>
+      <p class="measure-s mut" style="margin-bottom:1.8rem">Оставьте телефон, менеджер уточнит детали и договорится о замере. Консультация бесплатная.</p>
+      <ul class="worklist" style="grid-template-columns:1fr">
+        {% for g in site.guarantees %}<li>{{ g }}</li>{% endfor %}
+      </ul>
+    </div>
+    {{ form_block('svcform', 'Заявка на ' + svc.nav | lower, 'Скажите объект и объём, менеджер посчитает и назовёт вилку до выезда.', 'Отправить заявку', svc.nav) }}
+  </div>
+</section>
+{% endblock %}

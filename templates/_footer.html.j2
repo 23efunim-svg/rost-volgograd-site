@@ -1,0 +1,64 @@
+<footer class="ftr">
+  <div class="wrap">
+    <div class="ftr__grid">
+      <div>
+        <a class="hdr__logo" href="/" style="margin-bottom:1.2rem">
+          <img src="/assets/logo/mark-neon.svg" alt="" width="30" height="36">
+          <span class="hdr__logo-txt"><b style="color:var(--text-light)">РОСТ</b><span>ремоптстройторг</span></span>
+        </a>
+        <p>Строительно-ремонтные работы и продажа стройматериалов в Волгограде. Работаем с 2000&nbsp;года.</p>
+        <p style="margin-top:1rem">
+          <a href="{{ site.social.vk }}" target="_blank" rel="noopener">Сообщество ВКонтакте</a><br>
+          <a href="{{ site.social.max }}" target="_blank" rel="noopener">Канал в МАКС</a>
+        </p>
+      </div>
+
+      <div>
+        <h4>Услуги</h4>
+        <ul>
+          {% for s in services.services[:6] %}
+          <li><a href="/uslugi/{{ s.slug }}/">{{ s.nav }}</a></li>
+          {% endfor %}
+          <li><a href="/uslugi/">Все услуги и цены</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Материалы</h4>
+        <ul>
+          {% for c in catalog.categories[:6] %}
+          <li><a href="/stroymaterialy/{{ c.slug }}/">{{ c.name }}</a></li>
+          {% endfor %}
+          <li><a href="/stroymaterialy/">Весь каталог</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Контакты</h4>
+        <ul>
+          <li>Отдел ремонта<br><a href="tel:{{ site.phones.works[0].tel }}" style="color:var(--text-light);font-weight:600">{{ site.phones.works[0].display }}</a>, {{ site.phones.works[0].name }}</li>
+          <li>Отдел продаж<br><a href="tel:{{ site.phones.sales[0].tel }}" style="color:var(--text-light);font-weight:600">{{ site.phones.sales[0].display }}</a>, {{ site.phones.sales[0].name }}</li>
+          <li><a href="mailto:{{ site.email }}">{{ site.email }}</a></li>
+          <li>{{ site.office.address }}<br><span style="opacity:.7">{{ site.office.how_to_find }}</span></li>
+          <li>Пн–Пт 9:00–18:00, Сб 9:00–14:00</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="ftr__legal">
+      <p>{{ site.legal.name }}. ОГРНИП&nbsp;{{ site.legal.ogrnip }}, ИНН&nbsp;{{ site.legal.inn }}. Адрес регистрации: {{ site.legal.address_legal }}.</p>
+      <p style="margin-top:.7rem">
+        <a href="/politika/">Политика обработки персональных данных</a> ·
+        <a href="/soglasie/">Согласие на обработку данных</a> ·
+        © 2000–{{ today[:4] }} РОСТ · РЕМОПТСТРОЙТОРГ
+      </p>
+      <p style="margin-top:.7rem;opacity:.6">Информация на сайте не является публичной офертой. Стоимость работ определяется после осмотра объекта и фиксируется в смете.</p>
+    </div>
+  </div>
+</footer>
+
+<div class="cookie" data-cookie>
+  <p>Сайт использует файлы cookie и Яндекс&nbsp;Метрику, чтобы понимать, какими страницами пользуются. Подробности в <a href="/politika/">политике обработки данных</a>.</p>
+  <button class="btn btn--ghost" type="button" data-cookie-no>Только необходимые</button>
+  <button class="btn btn--primary" type="button" data-cookie-yes>Принять</button>
+</div>

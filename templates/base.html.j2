@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ page.title_tag }}</title>
+<meta name="description" content="{{ page.description }}">
+<link rel="canonical" href="https://{{ site.brand.domain }}{{ page.url }}">
+<meta name="robots" content="index, follow">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="РОСТ · РЕМОПТСТРОЙТОРГ">
+<meta property="og:title" content="{{ page.title_tag }}">
+<meta property="og:description" content="{{ page.description }}">
+<meta property="og:url" content="https://{{ site.brand.domain }}{{ page.url }}">
+<meta property="og:image" content="https://{{ site.brand.domain }}/assets/img/og-cover.jpg">
+<meta property="og:locale" content="ru_RU">
+
+<link rel="icon" href="/assets/logo/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/logo/apple-touch-icon.png">
+<link rel="preload" href="/assets/fonts/onest-400-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/unbounded-600-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/css/fonts.css">
+<link rel="stylesheet" href="/assets/css/base.css">
+<link rel="stylesheet" href="/assets/css/blocks.css">
+{% block head_extra %}{% endblock %}
+
+<script type="application/ld+json">{{ page.jsonld | safe }}</script>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="wrap hdr__row">
+    <a class="hdr__logo" href="/">
+      <img src="/assets/logo/mark-neon.svg" alt="РОСТ РЕМОПТСТРОЙТОРГ" width="34" height="40">
+      <span class="hdr__logo-txt"><b>РОСТ</b><span>ремоптстройторг</span></span>
+    </a>
+    <nav class="hdr__nav" aria-label="Основная навигация">
+      {%- for it in nav %}
+      <a href="{{ it.url }}"{% if page.url == it.url or (it.url != '/' and page.url.startswith(it.url)) %} aria-current="page"{% endif %}>{{ it.label }}</a>
+      {%- endfor %}
+    </nav>
+    <div class="hdr__cta">
+      <a class="hdr__tel" href="tel:{{ site.phones.primary.tel }}">{{ site.phones.primary.display }}<small>Пн–Пт 9:00–18:00</small></a>
+      <a class="btn btn--primary" href="#zayavka" data-modal="call">Вызвать замерщика</a>
+      <button class="hdr__burger" type="button" aria-label="Меню" aria-expanded="false" data-burger><i></i><i></i><i></i></button>
+    </div>
+  </div>
+  <div class="mnav" data-mnav>
+    <div class="wrap">
+      {%- for it in nav %}<a href="{{ it.url }}">{{ it.label }}</a>{% endfor %}
+      <div class="mnav__cta">
+        <a class="btn btn--primary btn--wide" href="tel:{{ site.phones.primary.tel }}">Позвонить {{ site.phones.primary.display }}</a>
+        <a class="btn btn--ghost btn--wide" href="#zayavka" data-modal="call">Вызвать замерщика</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+{% block content %}{% endblock %}
+</main>
+
+<div class="mbar">
+  <a class="btn btn--ghost" href="tel:{{ site.phones.primary.tel }}">Позвонить</a>
+  <button class="btn btn--primary" type="button" data-modal="mbar">Вызвать замерщика</button>
+</div>
+
+{% include "_footer.html.j2" %}
+{% include "_modal.html.j2" %}
+
+<script src="/assets/js/app.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,321 @@
+{% extends "base.html.j2" %}
+{% from "_macros.html.j2" import form_block, icon %}
+{% set h = content.home %}
+
+{% block content %}
+
+<!-- ================= ПЕРВЫЙ ЭКРАН ================= -->
+<section class="hero">
+  <div class="hero__media">
+    <img src="/assets/photo/objects/simonova/simonova-08.webp"
+         alt="Комната после ремонта под ключ: натяжной потолок с трековым освещением, ламинат ёлочкой"
+         width="1200" height="1600" fetchpriority="high">
+  </div>
+  <div class="wrap hero__inner">
+    <p class="hero__eyebrow">( {{ h.hero.eyebrow_pre }} <b>{{ h.hero.eyebrow_post }}</b> )</p>
+    <h1>{{ h.hero.h1_a }} <em>{{ h.hero.h1_b }}</em></h1>
+    <div class="lightline" style="margin-bottom:1.6rem"></div>
+    <p class="hero__lead">{{ h.hero.lead }}</p>
+    <div class="hero__acts">
+      <button class="btn btn--primary" type="button" data-modal="hero">Вызвать замерщика</button>
+      <a class="btn btn--ghost" href="#raschet">Рассчитать стоимость ремонта</a>
+    </div>
+    <dl class="hero__facts">
+      {% for f in h.hero.facts %}
+      <div><dt>{{ f.k }}</dt><dd><b>{{ f.v }}</b></dd></div>
+      {% endfor %}
+    </dl>
+  </div>
+</section>
+
+<!-- ================= БЕГУЩАЯ СТРОКА ================= -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker__track">
+    {% for i in range(2) %}{% for t in h.ticker %}<span>{{ t }}</span>{% endfor %}{% endfor %}
+  </div>
+</div>
+
+<!-- ================= ДВА НАПРАВЛЕНИЯ ================= -->
+<section class="section section--sand">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">( {{ h.duo.eyebrow }} )</p>
+      <h2 class="measure">{{ h.duo.h2 }}</h2>
+      <p class="measure">{{ h.duo.lead }}</p>
+    </div>
+
+    <div class="duo">
+      {% set duo_img = ['/assets/photo/objects/arbat/arbat-06.webp', '/assets/photo/objects/yantarnaya/yantarnaya-11.webp'] %}
+      {% for c in h.duo.cards %}
+      <a class="duo__card reveal" href="{{ c.url }}">
+        <img src="{{ duo_img[loop.index0] }}" alt="" loading="lazy" width="1200" height="1600">
+        <span class="duo__num">( {{ c.num }} )</span>
+        <div class="duo__body">
+          <h3>{{ c.title }}</h3>
+          <p>{{ c.text }}</p>
+          <div class="duo__tags">{% for t in c.tags %}<i>{{ t }}</i>{% endfor %}</div>
+          <span class="duo__more">{{ c.cta }}</span>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ================= ЦИФРЫ ================= -->
+<section class="section section--dark">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">( {{ h.nums.eyebrow }} )</p>
+      <h2 class="measure">{{ h.nums.h2 }}</h2>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="nums">
+      {% for n in h.nums['items'] %}
+      <div class="reveal"><b>{{ n.b }}</b><span>{{ n.s }}</span><small>{{ n.note }}</small></div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ================= УСЛУГИ ================= -->
+<section class="section section--paper" id="uslugi">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">( Что делаем )</p>
+      <h2 class="measure">Берём и весь объект целиком, и отдельную работу</h2>
+      <p class="measure">Дом с нуля, ремонт квартиры, замена проводки или один санузел. Каждое направление ведёт своя бригада, материалы идут со своей базы.</p>
+    </div>
+
+    {% set svc_icons = {'remont-kvartir':'home','stroitelstvo-domov':'crane','otdelochnye-raboty':'brush','elektromontazh':'bolt','santehnicheskie-raboty':'drop','krovlya-i-fasady':'roof','zabory-i-blagoustroystvo':'fence','kommercheskie-pomeshcheniya':'office'} %}
+    <div class="svc">
+      {% for s in services.services %}
+      <a class="svc__item" href="/uslugi/{{ s.slug }}/">
+        {{ icon(svc_icons[s.slug]) }}
+        <h3>{{ s.nav }}</h3>
+        <p>{{ s.works[:3] | join(', ') | lower }}</p>
+        {% if s.price_ref == 'remont' %}<em>от 7 000 ₽ за м²</em>{% else %}<em>Цена после замера</em>{% endif %}
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ================= КАЛЬКУЛЯТОР ================= -->
+<section class="section section--darker" id="raschet">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">( Прикидка до замера )</p>
+      <h2 class="measure">Посчитайте порядок суммы за минуту</h2>
+      <p class="measure">Считает по нашему прайсу за квадратный метр. Это ориентир, а не смета: точная сумма зависит от состояния объекта и состава работ, её считает менеджер после замера.</p>
+    </div>
+
+    <div class="calc">
+      <div>
+        <div class="calc__field">
+          <span class="calc__legend">Площадь помещения</span>
+          <div class="calc__range">
+            <input type="range" id="calc-area" min="18" max="220" step="1" value="55" aria-label="Площадь в квадратных метрах">
+            <span class="calc__area" data-calc-area>55 м²</span>
+          </div>
+        </div>
+
+        <div class="calc__field">
+          <span class="calc__legend">Что за объект</span>
+          <div class="calc__opts" role="radiogroup" aria-label="Тип объекта">
+            <label><input type="radio" name="obj" value="new" checked><span>Новостройка</span></label>
+            <label><input type="radio" name="obj" value="old"><span>Вторичное жильё</span></label>
+            <label><input type="radio" name="obj" value="cosm"><span>Освежить косметикой</span></label>
+          </div>
+        </div>
+
+        <div class="calc__field">
+          <span class="calc__legend">Уровень отделки</span>
+          <div class="calc__opts" role="radiogroup" aria-label="Уровень отделки">
+            <label><input type="radio" name="lvl" value="econom" checked><span>Эконом</span></label>
+            <label><input type="radio" name="lvl" value="standart"><span>Стандарт</span></label>
+            <label><input type="radio" name="lvl" value="elit"><span>Элит</span></label>
+          </div>
+        </div>
+      </div>
+
+      <div class="calc__out">
+        <span class="calc__sub" style="margin:0">Ориентировочная стоимость работ</span>
+        <div class="calc__sum" data-calc-sum>от 550 000 ₽</div>
+        <div class="calc__sub" data-calc-rate>по ставке 10 000 ₽ за м²</div>
+        <button class="btn btn--primary btn--wide" type="button" data-modal="calc">Получить точный расчёт</button>
+        <p class="calc__disclaim" data-calc-note>Расчёт по прайсу компании. Точная стоимость зависит от объёма и сложности работ и определяется после осмотра объекта.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ЦЕНЫ ================= -->
+<section class="section section--sand" id="ceny">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">( Цены на ремонт )</p>
+      <h2 class="measure">Три уровня, из которых выбирают чаще всего</h2>
+      <p class="measure">{{ services.price_tables.remont.note }}</p>
+    </div>
+
+    <div class="price">
+      {% for lv in services.price_tables.remont.levels %}
+      <div class="price__card{% if lv.key == 'standart' %} price__card--hot{% endif %} reveal">
+        <div class="price__name">{{ lv.name }}</div>
+        <p class="price__desc">{{ lv.desc }}</p>
+        <ul class="price__rows">
+          {% for r in lv.rows %}
+          <li><span>{{ r.label }}</span><b>от {{ r.price | money }} ₽/м²</b></li>
+          {% endfor %}
+        </ul>
+        <p class="price__note">Состав работ по вашему объекту фиксируется в смете до начала работ.</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ================= ОТСТРОЙКА ================= -->
+<section class="section section--paper">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">( {{ h.vs.eyebrow }} )</p>
+      <h2 class="measure">{{ h.vs.h2 }}</h2>
+      <p class="measure">{{ h.vs.lead }}</p>
+    </div>
+
+    <div class="vs">
+      {% for r in h.vs.rows %}
+      <div class="vs__row">
+        <div class="vs__cell vs__cell--bad"><b>Как бывает</b><p>{{ r.bad }}</p></div>
+        <div class="vs__cell vs__cell--good"><b>Как у нас</b><p>{{ r.good }}</p></div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ================= РАБОТЫ ================= -->
+<section class="section section--dark">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">( Выполненные работы )</p>
+      <h2 class="measure">Объекты, которые можно рассмотреть вблизи</h2>
+      <p class="measure">Съёмка на наших объектах в Волгограде и области. Здесь и готовые интерьеры, и черновые этапы, по которым видно, как сделана инженерия под отделкой.</p>
+    </div>
+
+    <div class="works">
+      {% set featured = ['arbat', 'partizanskaya', 'yantarnaya', 'simonova', 'barminy', 'kim'] %}
+      {% for slug in featured %}
+      {% set o = objects[slug] %}
+      <a class="work reveal" href="/raboty/{{ slug }}/">
+        <img src="/assets/photo/objects/{{ slug }}/{{ o.photos[0].name }}-thumb.webp" alt="{{ o.title }}" loading="lazy" width="720" height="960">
+        <span class="work__idx">( {{ '%02d' % loop.index }} )</span>
+        <div class="work__meta">
+          <h3>{{ o.title }}</h3>
+          <p>{{ objects_meta.objects[slug].type }} · {{ o.photos | length }} фото</p>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+
+    <div style="margin-top:2.5rem">
+      <a class="btn btn--ghost" href="/raboty/">Смотреть все объекты</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= МАТЕРИАЛЫ ================= -->
+<section class="section section--darker">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">( Стройматериалы )</p>
+      <h2 class="measure">{{ catalog.intro.h1 }}</h2>
+      <p class="measure">{{ catalog.intro.lead }}</p>
+    </div>
+
+    <div class="cat">
+      {% for c in catalog.categories[:8] %}
+      <a class="cat__card reveal" href="/stroymaterialy/{{ c.slug }}/">
+        {{ icon(c.icon) }}
+        <h3>{{ c.name }}</h3>
+        <ul>{% for i in c['items'][:4] %}<li>{{ i }}</li>{% endfor %}</ul>
+        <em>Узнать цену и наличие →</em>
+      </a>
+      {% endfor %}
+    </div>
+
+    <div style="margin-top:2.5rem">
+      <a class="btn btn--ghost" href="/stroymaterialy/">Все 12 направлений</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ЭТАПЫ ================= -->
+<section class="section section--dark">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">( Как проходит работа )</p>
+      <h2 class="measure">Пять шагов от звонка до подписанного акта</h2>
+    </div>
+    <div class="steps">
+      {% for st in site.process %}
+      <div class="steps__item"><span class="steps__n"></span><div><h3>{{ st.title }}</h3><p>{{ st.text }}</p></div></div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ================= ОТЗЫВЫ ================= -->
+<section class="section section--sand">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">( {{ h.quotes.eyebrow }} )</p>
+      <h2 class="measure">{{ h.quotes.h2 }}</h2>
+      <p class="measure">{{ h.quotes.lead }}</p>
+    </div>
+    <div class="quotes">
+      {% for q in h.quotes['items'] %}
+      <div class="quote"><p>{{ q.text }}</p><cite>{{ q.cite }}</cite></div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section class="section section--paper">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">( Частые вопросы )</p>
+      <h2 class="measure">Что спрашивают до начала работ</h2>
+    </div>
+    <div class="faq">
+      {% for f in h.faq %}
+      <details{% if loop.first %} open{% endif %}>
+        <summary>{{ f.q }}</summary>
+        <div class="faq__a">{{ f.a }}</div>
+      </details>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ================= ЗАЯВКА ================= -->
+<section class="section section--dark" id="zayavka">
+  <div class="wrap cta-band">
+    <div>
+      <p class="eyebrow">( Следующий шаг )</p>
+      <h2 style="margin-bottom:1rem">{{ h.cta.h2 }}</h2>
+      <div class="lightline" style="margin-bottom:1.5rem"></div>
+      <p class="measure-s mut" style="margin-bottom:1.8rem">{{ h.cta.lead }}</p>
+      <ul class="worklist" style="grid-template-columns:1fr">
+        {% for g in site.guarantees %}<li>{{ g }}</li>{% endfor %}
+      </ul>
+    </div>
+    {{ form_block('main', 'Вызвать замерщика', 'Приедем, снимем размеры, посмотрим состояние коммуникаций и посчитаем смету по вашему объекту.', 'Вызвать замерщика', 'Главная, нижняя форма') }}
+  </div>
+</section>
+
+{% endblock %}

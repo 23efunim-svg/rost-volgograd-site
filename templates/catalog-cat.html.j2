@@ -1,0 +1,78 @@
+{% extends "base.html.j2" %}
+{% from "_macros.html.j2" import form_block, icon %}
+
+{% block content %}
+<section class="section section--dark" style="padding-bottom:calc(var(--section-y) * .6)">
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Хлебные крошки"><a href="/">Главная</a><span>/</span><a href="/stroymaterialy/">Стройматериалы</a><span>/</span>{{ cat.name }}</nav>
+    <div style="display:flex;gap:1.2rem;align-items:flex-start;margin-bottom:1.3rem">
+      <span style="flex:0 0 auto;color:var(--teal);width:44px;height:44px;display:block">{{ icon(cat.icon) }}</span>
+      <h1 style="max-width:18ch">{{ cat.name }} в Волгограде</h1>
+    </div>
+    <div class="lightline" style="margin-bottom:1.5rem"></div>
+    <p class="measure mut" style="margin-bottom:2.2rem">{{ cat.lead }}</p>
+    <div class="hero__acts">
+      <button class="btn btn--primary" type="button" data-modal="catcat">Узнать цену и наличие</button>
+      <a class="btn btn--ghost" href="tel:{{ site.phones.sales[0].tel }}">{{ site.phones.sales[0].display }}</a>
+    </div>
+  </div>
+</section>
+
+<section class="section section--paper">
+  <div class="wrap">
+    <div class="grid" style="grid-template-columns:1.25fr .75fr;gap:clamp(1.5rem,1rem+3vw,4rem);align-items:start">
+      <div>
+        <p class="eyebrow">( Что есть в этой группе )</p>
+        <h2 style="margin-bottom:1.6rem">Позиции, которые подбираем и поставляем</h2>
+        <ul class="worklist">
+          {% for i in cat['items'] %}<li>{{ i }}</li>{% endfor %}
+        </ul>
+
+        <h3 style="margin:2.6rem 0 .8rem">Что нужно сказать менеджеру, чтобы посчитать точно</h3>
+        <p class="mut measure">{{ cat.params }}. Если параметров под рукой нет, достаточно размеров объекта или фотографии проекта: посчитаем сами.</p>
+
+        <h3 style="margin:2.2rem 0 .8rem">Единицы, в которых считаем</h3>
+        <p class="mut">{{ cat.units }}</p>
+      </div>
+
+      <aside>
+        <div class="lead-form" style="position:sticky;top:96px">
+          <h3>Цена и наличие на сегодня</h3>
+          <p>Позвоните или оставьте заявку. Скажем актуальную цену, посчитаем количество под объект и назовём срок отгрузки.</p>
+          <ul class="worklist" style="grid-template-columns:1fr;margin-bottom:1.5rem">
+            <li>Счёт и накладная для организаций</li>
+            <li>Самовывоз с базы на Циолковского, 1А</li>
+            <li>Сертификаты по запросу</li>
+          </ul>
+          <a class="btn btn--primary btn--wide" href="tel:{{ site.phones.sales[0].tel }}">{{ site.phones.sales[0].display }}</a>
+          <button class="btn btn--ghost btn--wide" type="button" data-modal="catcat2" style="margin-top:.6rem">Написать заявку</button>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="section section--sand">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">( Другие направления )</p>
+      <h2 class="measure">Соберём в один заказ с остальным материалом</h2>
+    </div>
+    <div class="chips">
+      {% for c in catalog.categories if c.slug != cat.slug %}<a href="/stroymaterialy/{{ c.slug }}/">{{ c.name }}</a>{% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section section--dark" id="zayavka">
+  <div class="wrap cta-band">
+    <div>
+      <p class="eyebrow">( Запрос цены )</p>
+      <h2 style="margin-bottom:1rem">Напишите, что нужно, и мы посчитаем</h2>
+      <div class="lightline" style="margin-bottom:1.5rem"></div>
+      <p class="measure-s mut">Список позиций, размеры объекта или фотография проекта. Посчитаем количество, скажем цену на сегодня и что ещё понадобится к этой позиции.</p>
+    </div>
+    {{ form_block('catform', 'Узнать цену и наличие', cat.name + ': скажите объём или размеры объекта, менеджер посчитает и назовёт цену на сегодня.', 'Отправить запрос', 'Каталог: ' + cat.name) }}
+  </div>
+</section>
+{% endblock %}

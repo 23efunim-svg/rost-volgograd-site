@@ -1,0 +1,20 @@
+{% extends "base.html.j2" %}
+
+{% block head_extra %}<meta name="robots" content="noindex, follow">{% endblock %}
+
+{% block content %}
+<section class="section section--dark" style="min-height:62vh;display:grid;align-items:center">
+  <div class="wrap">
+    <p class="eyebrow">( 404 )</p>
+    <h1 class="measure" style="margin-bottom:1.2rem">Такой страницы на сайте нет</h1>
+    <div class="lightline" style="margin-bottom:1.5rem"></div>
+    <p class="measure mut" style="margin-bottom:2rem">Возможно, адрес набран с опечаткой или страницу перенесли. Начните с главной или сразу перейдите к нужному разделу.</p>
+    <div class="hero__acts">
+      <a class="btn btn--primary" href="/">На главную</a>
+      <a class="btn btn--ghost" href="/uslugi/">Услуги и цены</a>
+      <a class="btn btn--ghost" href="/stroymaterialy/">Стройматериалы</a>
+    </div>
+    <p class="mut" style="margin-top:2.5rem">Или позвоните: <a href="tel:{{ site.phones.primary.tel }}" style="color:var(--teal);font-weight:600">{{ site.phones.primary.display }}</a></p>
+  </div>
+</section>
+{% endblock %}

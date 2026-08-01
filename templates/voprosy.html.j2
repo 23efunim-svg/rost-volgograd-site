@@ -1,0 +1,58 @@
+{% extends "base.html.j2" %}
+{% from "_macros.html.j2" import form_block %}
+
+{% block content %}
+<section class="section section--dark" style="padding-bottom:calc(var(--section-y) * .55)">
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Хлебные крошки"><a href="/">Главная</a><span>/</span>Вопросы и ответы</nav>
+    <p class="eyebrow">( Частые вопросы )</p>
+    <h1 class="measure" style="margin-bottom:1.3rem">Что спрашивают до начала работ и до покупки материалов</h1>
+    <div class="lightline" style="margin-bottom:1.5rem"></div>
+    <p class="measure mut">Отвечаем на три главных вопроса: сколько стоит, как проходит работа и сколько она длится. Плюс то, что чаще всего спрашивают в отделе продаж.</p>
+  </div>
+</section>
+
+<section class="section section--paper" style="padding-top:calc(var(--section-y) * .7)">
+  <div class="wrap">
+    <div class="faq">
+      {% for f in faq_all %}
+      <details{% if loop.first %} open{% endif %}>
+        <summary>{{ f.q }}</summary>
+        <div class="faq__a">{{ f.a }}</div>
+      </details>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section section--sand">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">( Как проходит работа )</p>
+      <h2 class="measure">Пять шагов от звонка до подписанного акта</h2>
+    </div>
+    <div class="grid g-3">
+      {% for st in site.process %}
+      <div>
+        <div class="lightline" style="margin-bottom:.9rem"></div>
+        <h3 style="margin-bottom:.5rem">{{ st.step }}. {{ st.title }}</h3>
+        <p class="mut">{{ st.text }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section section--dark" id="zayavka">
+  <div class="wrap cta-band">
+    <div>
+      <p class="eyebrow">( Не нашли ответ )</p>
+      <h2 style="margin-bottom:1rem">Спросите напрямую</h2>
+      <div class="lightline" style="margin-bottom:1.5rem"></div>
+      <p class="measure-s mut" style="margin-bottom:1.5rem">Ремонт и строительство: <a href="tel:{{ site.phones.works[0].tel }}" class="teal" style="font-weight:600">{{ site.phones.works[0].display }}</a>, {{ site.phones.works[0].name }}.<br>
+      Материалы: <a href="tel:{{ site.phones.sales[0].tel }}" class="teal" style="font-weight:600">{{ site.phones.sales[0].display }}</a>, {{ site.phones.sales[0].name }}.</p>
+    </div>
+    {{ form_block('faq', 'Задать вопрос', 'Оставьте телефон и вопрос, менеджер перезвонит в рабочее время и ответит.', 'Отправить вопрос', 'Страница вопросов') }}
+  </div>
+</section>
+{% endblock %}

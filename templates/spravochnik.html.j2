@@ -1,0 +1,51 @@
+{% extends "base.html.j2" %}
+{% from "_macros.html.j2" import form_block, icon %}
+
+{% block content %}
+<section class="section section--dark" style="padding-bottom:calc(var(--section-y) * .55)">
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Хлебные крошки"><a href="/">Главная</a><span>/</span>Справочник</nav>
+    <p class="eyebrow">( Расчёты для стройки )</p>
+    <h1 class="measure" style="margin-bottom:1.3rem">Калькуляторы, которые считают сразу, без «оставьте телефон»</h1>
+    <div class="lightline" style="margin-bottom:1.5rem"></div>
+    <p class="measure mut">Цифру видно на экране. Формулы открытые, их можно проверить. Если после расчёта понадобится сам материал, позвоните в отдел продаж, мы посчитаем комплект целиком.</p>
+  </div>
+</section>
+
+<section class="section section--dark" style="padding-top:0">
+  <div class="wrap">
+    <div class="cat">
+      {% for c in calcs %}
+      <a class="cat__card" href="/spravochnik/{{ c.slug }}/">
+        {{ icon(c.icon) }}
+        <h3>{{ c.name }}</h3>
+        <ul><li>{{ c.short }}</li></ul>
+        <em>Посчитать →</em>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section section--paper">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">( Зачем это )</p>
+      <h2 class="measure">Считаем при вас, а не «пришлите заявку, потом ответим»</h2>
+    </div>
+    <p class="measure">Половина запросов о стройматериалах в Волгограде это не «купить», а «сколько весит», «сколько нужно», «какое сечение». Мы сделали расчёты открытыми: посчитайте сами, а когда дойдёт до заказа, менеджер проверит цифры и подберёт комплект.</p>
+  </div>
+</section>
+
+<section class="section section--dark" id="zayavka">
+  <div class="wrap cta-band">
+    <div>
+      <p class="eyebrow">( Материалы )</p>
+      <h2 style="margin-bottom:1rem">Посчитали объём, теперь посчитаем цену</h2>
+      <div class="lightline" style="margin-bottom:1.5rem"></div>
+      <p class="measure-s mut">Скажите позиции и количество, назовём цену и наличие на сегодня. Для организаций выставим счёт.</p>
+    </div>
+    {{ form_block('spravochnik', 'Узнать цену и наличие', 'Напишите, что нужно и в каком объёме. Менеджер проверит расчёт и назовёт сумму.', 'Отправить запрос', 'Справочник') }}
+  </div>
+</section>
+{% endblock %}
