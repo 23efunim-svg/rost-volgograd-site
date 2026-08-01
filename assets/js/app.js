@@ -56,6 +56,13 @@
       });
     }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
     $$('.reveal').forEach(function (el) { io.observe(el); });
+    // страховка: если наблюдатель по какой-то причине не сработал,
+    // блоки всё равно показываются, а не остаются пустыми
+    setTimeout(function () {
+      $$('.reveal:not(.is-in)').forEach(function (el) {
+        if (el.getBoundingClientRect().top < window.innerHeight * 2) el.classList.add('is-in');
+      });
+    }, 2500);
   } else {
     $$('.reveal').forEach(function (el) { el.classList.add('is-in'); });
   }
