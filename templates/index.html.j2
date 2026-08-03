@@ -4,7 +4,7 @@
 
 {% block content %}
 
-<!-- первый экран -->
+<!-- первый экран: слева оффер, справа квиз с живым расчётом -->
 <section class="hero">
   <div class="hero__bg">
     <img src="/assets/photo/objects/simonova/simonova-08.webp"
@@ -12,18 +12,78 @@
          width="1200" height="1600" fetchpriority="high">
   </div>
   <div class="wrap hero__in">
-    <p class="kick">Волгоград, с 2000 года</p>
-    <h1>{{ h.hero.h1_a }} <em>{{ h.hero.h1_b }}</em></h1>
-    <p class="hero__sub">{{ h.hero.lead }}</p>
-    <div class="hero__act">
-      <button class="btn btn--fill" type="button" data-modal><span>Вызвать замерщика</span></button>
-      <a class="btn btn--gh" href="#raschet"><span>Рассчитать ремонт</span></a>
+
+    <div>
+      <div class="badges">
+        <i>Волгоград, <b>с 2000 года</b></i>
+        <i>Гарантия на работы <b>12 месяцев</b></i>
+        <i><b>291 объект</b> за 4 года</i>
+        <i>Своя база на <b>Циолковского, 1А</b></i>
+      </div>
+      <h1>{{ h.hero.h1_a }} <em>{{ h.hero.h1_b }}</em></h1>
+      <p class="hero__sub">{{ h.hero.lead }}</p>
+      <div class="hero__act">
+        <button class="btn btn--fill" type="button" data-modal><span>Вызвать замерщика</span></button>
+        <a class="btn btn--gh" href="/raboty/"><span>Смотреть работы</span></a>
+      </div>
     </div>
-    <dl class="facts">
-      {% for f in h.hero.facts %}
-      <div><dt>{{ f.k }}</dt><dd>{{ f.v }}</dd></div>
-      {% endfor %}
-    </dl>
+
+    <form class="frm quiz" method="post" action="/api/lead.php" data-lead novalidate>
+      <h2>Посчитайте ремонт за минуту</h2>
+      <p class="quiz__sub">Считаем по нашему прайсу, цифру видно сразу.</p>
+
+      <input type="hidden" name="source" value="Квиз на первом экране">
+      <input type="hidden" name="page" value="" data-page>
+      <input type="hidden" name="ts" value="" data-ts>
+      <input type="hidden" name="note" value="" data-quiz-note>
+      <div class="hp" aria-hidden="true"><label>Не заполняйте это поле<input type="text" name="company" tabindex="-1" autocomplete="off"></label></div>
+
+      <div class="quiz__q">
+        <span><b>1.</b> Что за объект</span>
+        <div class="opt" role="radiogroup" aria-label="Тип объекта">
+          <label><input type="radio" name="obj" value="new" checked><span>Новостройка</span></label>
+          <label><input type="radio" name="obj" value="old"><span>Вторичка</span></label>
+          <label><input type="radio" name="obj" value="cosm"><span>Косметика</span></label>
+        </div>
+      </div>
+
+      <div class="quiz__q">
+        <span><b>2.</b> Уровень отделки</span>
+        <div class="opt" role="radiogroup" aria-label="Уровень отделки">
+          <label><input type="radio" name="lvl" value="econom" checked><span>Эконом</span></label>
+          <label><input type="radio" name="lvl" value="standart"><span>Стандарт</span></label>
+          <label><input type="radio" name="lvl" value="elit"><span>Элит</span></label>
+        </div>
+      </div>
+
+      <div class="quiz__q">
+        <span><b>3.</b> Площадь помещения</span>
+        <div class="rng">
+          <input type="range" id="calc-area" min="18" max="220" step="1" value="55" aria-label="Площадь в квадратных метрах">
+          <b data-calc-area>55 м²</b>
+        </div>
+      </div>
+
+      <div class="quiz__out">
+        <span>Ориентировочно<br><i style="font-style:normal" data-calc-rate>по ставке 10 000 ₽ за м²</i></span>
+        <b data-calc-sum>от 550 000 ₽</b>
+      </div>
+
+      <div class="fld" data-fld>
+        <input name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="Телефон для точного расчёта" required aria-label="Телефон">
+        <span class="fld__e">Проверьте номер: нужно 11 цифр, начиная с 7 или 8</span>
+      </div>
+
+      <label class="cns">
+        <input type="checkbox" name="consent" value="1" required>
+        <span>Даю <a href="/soglasie/" target="_blank">согласие на обработку данных</a></span>
+      </label>
+
+      <button class="btn btn--fill btn--w" type="submit"><span>Получить точный расчёт</span></button>
+      <div class="msg" data-msg role="status"></div>
+      <p class="quiz__note" data-calc-note>Ориентир, а не смета: точная сумма после осмотра объекта.</p>
+    </form>
+
   </div>
 </section>
 
@@ -122,51 +182,6 @@
       {% endfor %}
     </div>
     <p style="margin-top:1.3rem"><a class="btn btn--gh" href="/raboty/"><span>Все объекты</span></a></p>
-  </div>
-</section>
-
-<!-- калькулятор -->
-<section class="sec sec--alt" id="raschet">
-  <div class="wrap">
-    <div class="head">
-      <p class="kick">Прикидка до замера</p>
-      <h2>Посчитайте порядок суммы за минуту</h2>
-      <p>Считает по нашему прайсу за квадратный метр. Это ориентир, а не смета: точная сумма зависит от состояния объекта и состава работ.</p>
-    </div>
-    <div class="calc">
-      <div>
-        <div class="cf">
-          <span class="cf__l">Площадь помещения</span>
-          <div class="rng">
-            <input type="range" id="calc-area" min="18" max="220" step="1" value="55" aria-label="Площадь в квадратных метрах">
-            <b data-calc-area>55 м²</b>
-          </div>
-        </div>
-        <div class="cf">
-          <span class="cf__l">Что за объект</span>
-          <div class="opt" role="radiogroup" aria-label="Тип объекта">
-            <label><input type="radio" name="obj" value="new" checked><span>Новостройка</span></label>
-            <label><input type="radio" name="obj" value="old"><span>Вторичное жильё</span></label>
-            <label><input type="radio" name="obj" value="cosm"><span>Освежить косметикой</span></label>
-          </div>
-        </div>
-        <div class="cf">
-          <span class="cf__l">Уровень отделки</span>
-          <div class="opt" role="radiogroup" aria-label="Уровень отделки">
-            <label><input type="radio" name="lvl" value="econom" checked><span>Эконом</span></label>
-            <label><input type="radio" name="lvl" value="standart"><span>Стандарт</span></label>
-            <label><input type="radio" name="lvl" value="elit"><span>Элит</span></label>
-          </div>
-        </div>
-      </div>
-      <div class="res">
-        <span class="res__k">Ориентировочная стоимость работ</span>
-        <div class="res__v" data-calc-sum>от 550 000 ₽</div>
-        <div class="res__s" data-calc-rate>по ставке 10 000 ₽ за м²</div>
-        <button class="btn btn--fill btn--w" type="button" data-modal><span>Получить точный расчёт</span></button>
-        <p class="res__n" data-calc-note>Расчёт по прайсу компании. Точная стоимость зависит от объёма и сложности работ и определяется после осмотра объекта.</p>
-      </div>
-    </div>
   </div>
 </section>
 

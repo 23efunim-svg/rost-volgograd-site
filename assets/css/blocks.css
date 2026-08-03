@@ -4,29 +4,72 @@
    ================================================================ */
 
 /* ---------------- первый экран ----------------
+   Собран по референсам заказчика: фон размыт и затемнён (remontvspb),
+   правую половину занимает квиз-форма (iconinteriors), низ блока скруглён (chotko).
    Обязан помещаться в один экран с учётом шапки, проверено на 1366×768. */
-.hero {
-  position: relative; min-height: calc(100svh - var(--hdr-h));
-  display: grid; align-items: center; overflow: hidden;
-}
-.hero__bg { position: absolute; inset: 0; }
-.hero__bg img { width: 100%; height: 100%; object-fit: cover; opacity: .62; }
-.hero__bg::after {
-  content: ""; position: absolute; inset: 0;
-  background: linear-gradient(92deg, rgba(13,13,14,.94) 0 26%, rgba(13,13,14,.66) 58%, rgba(13,13,14,.3));
-}
-.hero__in { position: relative; padding-block: 1.4rem; }
-.hero h1 { max-width: 19ch; margin-bottom: .75rem; }
-.hero h1 em { font-style: normal; color: var(--brass); }
-.hero__sub { max-width: 46ch; color: var(--tx-mut); margin-bottom: 1.2rem; font-size: var(--sm); }
-.hero__act { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1.5rem; }
+.hero { position: relative; overflow: hidden; border-radius: 0 0 clamp(18px, 2.6vw, 44px) clamp(18px, 2.6vw, 44px); }
+.hero__bg { position: absolute; top: -10px; left: -10px; width: calc(100% + 20px); height: calc(100% + 20px); z-index: 0; }
+.hero__bg img { width: 100%; height: 100%; object-fit: cover; filter: blur(5px) brightness(.42); }
+@media (max-width: 860px) { .hero__bg img { filter: blur(0) brightness(.5); } }
+.hero__bg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(13,13,14,.55), rgba(13,13,14,.2) 40%, rgba(13,13,14,.75)); }
 
-/* факты строкой, без плашек и рамок */
-.facts { display: flex; flex-wrap: wrap; gap: 0 2.2rem; border-top: 1px solid var(--ln); padding-top: .85rem; }
-.facts div { padding-block: .25rem; }
-.facts dt { font-size: var(--xs); color: var(--tx-dim); letter-spacing: .04em; }
-.facts dd { margin: .12rem 0 0; font-family: var(--serif); font-size: 1.02rem; color: var(--brass); }
-@media (max-width: 700px) { .facts { gap: 0 1.6rem; } .facts dd { font-size: 1rem; } }
+.hero__in {
+  position: relative; z-index: 1;
+  min-height: calc(100svh - var(--hdr-h));
+  display: grid; grid-template-columns: 1.05fr .95fr; gap: clamp(1.2rem, .9rem + 2vw, 2.6rem);
+  align-items: center; padding-block: 1.2rem;
+}
+@media (max-width: 940px) { .hero__in { grid-template-columns: 1fr; min-height: 0; padding-block: 2rem; } }
+
+/* плашки-бейджи над заголовком */
+.badges { display: flex; flex-wrap: wrap; gap: .35rem; margin-bottom: .8rem; }
+.badges i {
+  font-style: normal; font-size: var(--xs); letter-spacing: .05em; color: var(--tx);
+  padding: .34rem .7rem; border-radius: 100px;
+  background: rgba(255,255,255,.07); backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,.14);
+}
+.badges i b { color: var(--brass); font-weight: 500; }
+
+.hero h1 { max-width: 18ch; margin-bottom: .65rem; }
+.hero h1 em { font-style: normal; color: var(--brass); }
+.hero__sub { max-width: 44ch; color: #C9C6C0; margin-bottom: 1.05rem; font-size: var(--sm); }
+.hero__act { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1.15rem; }
+
+/* факты строкой */
+.facts { display: flex; flex-wrap: wrap; gap: 0 2rem; border-top: 1px solid rgba(255,255,255,.16); padding-top: .8rem; }
+.facts div { padding-block: .2rem; }
+.facts dt { font-size: var(--xs); color: #9C9992; letter-spacing: .04em; }
+.facts dd { margin: .1rem 0 0; font-family: var(--serif); font-size: 1rem; color: var(--brass); }
+@media (max-width: 700px) { .facts { gap: 0 1.5rem; } }
+
+/* квиз справа: стеклянная карточка с градиентной рамкой */
+.quiz {
+  position: relative; padding: clamp(.9rem, .75rem + .8vw, 1.25rem);
+  border-radius: 14px; background: rgba(255,255,255,.045); backdrop-filter: blur(14px);
+}
+.quiz::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px;
+  background: linear-gradient(180deg, rgba(255,255,255,.24), rgba(255,255,255,.07));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none;
+}
+.quiz > * { position: relative; }
+.quiz h2 { font-size: 1.1rem; margin-bottom: .22rem; }
+.quiz__sub { font-size: .72rem; color: #9C9992; margin-bottom: .75rem; line-height: 1.45; }
+.quiz__q { margin-bottom: .65rem; }
+.quiz__q > span { display: block; font-size: .68rem; letter-spacing: .09em; text-transform: uppercase; color: #9C9992; margin-bottom: .35rem; }
+.quiz__q > span b { color: var(--brass); font-weight: 400; }
+.quiz .opt span { padding: .34rem .65rem; font-size: .74rem; border-color: rgba(255,255,255,.18); color: #D6D3CD; }
+.quiz .opt input:checked + span { border-color: var(--brass); color: var(--brass); background: rgba(176,141,87,.12); }
+.quiz .rng b { font-size: 1rem; }
+.quiz__out { display: flex; align-items: baseline; justify-content: space-between; gap: .8rem; border-top: 1px solid rgba(255,255,255,.16); margin-top: .1rem; padding-top: .6rem; margin-bottom: .6rem; }
+.quiz__out span { font-size: var(--xs); color: #9C9992; }
+.quiz__out b { font-family: var(--serif); font-weight: 400; font-size: 1.3rem; color: var(--brass); white-space: nowrap; }
+.quiz .fld { margin-bottom: .45rem; }
+.quiz .fld input { border-color: rgba(255,255,255,.18); }
+.quiz__note { font-size: .66rem; color: #7E7B76; line-height: 1.4; margin-top: .45rem; }
+.quiz .cns { margin: .45rem 0 .6rem; font-size: .68rem; }
 
 /* ---------------- бегущая строка ---------------- */
 .tick { background: var(--bg-2); border-block: 1px solid var(--ln-2); overflow: hidden; padding-block: .62rem; }
