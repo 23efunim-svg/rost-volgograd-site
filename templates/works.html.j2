@@ -2,52 +2,46 @@
 {% from "_macros.html.j2" import form_block %}
 
 {% block content %}
-<section class="section section--dark" style="padding-bottom:calc(var(--section-y) * .55)">
+<section class="sec pgh" style="padding-bottom:calc(var(--sec) * .5)">
   <div class="wrap">
-    <nav class="crumbs" aria-label="Хлебные крошки"><a href="/">Главная</a><span>/</span>Работы</nav>
-    <p class="eyebrow">( Волгоград и область )</p>
-    <h1 class="measure" style="margin-bottom:1.3rem">Объекты, снятые на наших площадках, а не взятые из фотобанка</h1>
-    <div class="lightline" style="margin-bottom:1.5rem"></div>
-    <p class="measure mut">Здесь и готовые интерьеры, и черновые этапы: разводка электрики по перекрытию, шумоизоляция, штукатурка по маякам. По таким кадрам видно то, что после отделки уже не покажешь.</p>
+    <nav class="crumbs"><a href="/">Главная</a><i>/</i>Работы</nav>
+    <p class="kick">Волгоград и область</p>
+    <h1>Объекты, снятые на наших площадках</h1>
+    <p>Здесь и готовые интерьеры, и черновые этапы: разводка электрики по перекрытию, шумоизоляция, штукатурка по маякам. По таким кадрам видно то, что после отделки уже не покажешь.</p>
   </div>
 </section>
 
-<section class="section section--dark" style="padding-top:0">
+<section class="sec" style="padding-top:calc(var(--sec) * .6)">
   <div class="wrap">
     <div class="works">
+      {% set mods = ['big','','','tall','','','','big','',''] %}
       {% for slug, o in objects.items() %}
-      <a class="work reveal" href="/raboty/{{ slug }}/">
-        <img src="/assets/photo/objects/{{ slug }}/{{ o.photos[0].name }}-thumb.webp" alt="{{ o.title }}" loading="lazy" width="720" height="960">
-        <span class="work__idx">( {{ '%02d' % loop.index }} )</span>
-        <div class="work__meta">
-          <h3>{{ o.title }}</h3>
-          <p>{{ objects_meta.objects[slug].type }} · {{ o.photos | length }} фото</p>
-        </div>
+      {% set mod = mods[loop.index0] if loop.index0 < mods | length else '' %}
+      <a class="wk{% if mod %} wk--{{ mod }}{% endif %}" href="/raboty/{{ slug }}/">
+        <img src="/assets/photo/objects/{{ slug }}/{{ o.photos[0].name }}{% if mod != 'big' %}-thumb{% endif %}.webp" alt="{{ o.title }}" loading="lazy" width="720" height="960">
+        <span class="wk__i">{{ '%02d' % loop.index }}</span>
+        <span class="wk__m"><b>{{ o.title }}</b><span>{{ objects_meta.objects[slug].type }}, {{ o.photos | length }} фото</span></span>
       </a>
       {% endfor %}
     </div>
   </div>
 </section>
 
-<section class="section section--sand">
+<section class="sec sec--lt">
   <div class="wrap">
-    <div class="sec-head">
-      <p class="eyebrow">( Про фотографии )</p>
-      <h2 class="measure">Все снимки сделаны на объектах компании</h2>
-    </div>
-    <p class="measure">Фотографии не студийные: снято на телефон в процессе работы и после сдачи. Мы намеренно оставили кадры с чернового этапа, потому что качество ремонта определяется тем, что спрятано под отделкой, а не постановочным светом.</p>
+    <div class="head"><p class="kick">Про фотографии</p><h2>Все снимки сделаны на объектах компании</h2></div>
+    <p class="measure">Фотографии не студийные: снято в процессе работы и после сдачи. Кадры с чернового этапа оставлены намеренно, потому что качество ремонта определяется тем, что спрятано под отделкой.</p>
   </div>
 </section>
 
-<section class="section section--dark" id="zayavka">
-  <div class="wrap cta-band">
+<section class="sec" id="zayavka">
+  <div class="wrap band">
     <div>
-      <p class="eyebrow">( Следующий шаг )</p>
-      <h2 style="margin-bottom:1rem">Покажем объекты вживую</h2>
-      <div class="lightline" style="margin-bottom:1.5rem"></div>
+      <p class="kick">Следующий шаг</p>
+      <h2 style="margin-bottom:.7rem">Покажем объекты вживую</h2>
       <p class="measure-s mut">Если нужно посмотреть работу не по фото, скажите на замере. Договоримся с заказчиком и покажем объект, который сейчас в работе.</p>
     </div>
-    {{ form_block('works', 'Вызвать замерщика', 'Оставьте телефон, менеджер перезвонит в рабочее время и договорится об удобном времени замера.', 'Вызвать замерщика', 'Портфолио') }}
+    {{ form_block('w', 'Вызвать замерщика', 'Оставьте телефон, менеджер перезвонит в рабочее время и договорится об удобном времени замера.', 'Вызвать замерщика', 'Портфолио') }}
   </div>
 </section>
 {% endblock %}

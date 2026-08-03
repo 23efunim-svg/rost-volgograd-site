@@ -2,122 +2,112 @@
 {% from "_macros.html.j2" import form_block %}
 
 {% block content %}
-<section class="section section--dark" style="padding-bottom:calc(var(--section-y) * .55)">
+<section class="sec pgh" style="padding-bottom:calc(var(--sec) * .5)">
   <div class="wrap">
-    <nav class="crumbs" aria-label="Хлебные крошки"><a href="/">Главная</a><span>/</span>Цены на работы</nav>
-    <p class="eyebrow">( Прайс на 2026 год )</p>
-    <h1 class="measure" style="margin-bottom:1.3rem">Цены на ремонт и отделочные работы в Волгограде</h1>
-    <div class="lightline" style="margin-bottom:1.5rem"></div>
-    <p class="measure mut">Ставки за квадратный метр по трём уровням отделки. Точная сумма считается после замера: она зависит от состояния объекта, объёма и сложности работ.</p>
+    <nav class="crumbs"><a href="/">Главная</a><i>/</i>Цены</nav>
+    <p class="kick">Прайс на 2026 год</p>
+    <h1>Цены на ремонт и отделочные работы в Волгограде</h1>
+    <p>Ставки за квадратный метр по трём уровням отделки. Точная сумма считается после замера: она зависит от состояния объекта, объёма и сложности работ.</p>
   </div>
 </section>
 
-<section class="section section--sand" style="padding-top:calc(var(--section-y) * .7)">
+<section class="sec sec--lt" style="padding-top:calc(var(--sec) * .6)">
   <div class="wrap">
-    <div class="price">
-      {% for lv in services.price_tables.remont.levels %}
-      <div class="price__card{% if lv.key == 'standart' %} price__card--hot{% endif %}">
-        <div class="price__name">{{ lv.name }}</div>
-        <p class="price__desc">{{ lv.desc }}</p>
-        <ul class="price__rows">
-          {% for r in lv.rows %}<li><span>{{ r.label }}</span><b>от {{ r.price | money }} ₽/м²</b></li>{% endfor %}
-        </ul>
-        <p class="price__note">Состав работ по вашему объекту фиксируется в смете до начала работ.</p>
-      </div>
-      {% endfor %}
+    <div class="pr-wrap">
+      <table class="pr">
+        <thead><tr><th scope="col">Уровень</th><th scope="col">Косметический</th><th scope="col">Новостройка</th><th scope="col">Вторичное жильё</th></tr></thead>
+        <tbody>
+          {% for lv in services.price_tables.remont.levels %}
+          {% set rows = {} %}{% for r in lv.rows %}{% set _ = rows.update({r.label: r.price}) %}{% endfor %}
+          <tr>
+            <th scope="row">{{ lv.name }}<span class="pr__lvl">{{ lv.desc }}</span></th>
+            <td{% if 'Мелкий косметический ремонт' not in rows %} class="na"{% endif %}>{% if 'Мелкий косметический ремонт' in rows %}от {{ rows['Мелкий косметический ремонт'] | money }} ₽{% else %}по запросу{% endif %}</td>
+            <td>от {{ rows['Новостройка'] | money }} ₽</td>
+            <td>от {{ rows['Вторичное жильё'] | money }} ₽</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
 
-    <div class="grid g-2" style="margin-top:clamp(2rem, 1rem + 3vw, 3.5rem)">
+    <div class="grid g2" style="margin-top:calc(var(--sec) * .7)">
       <div>
-        <h2 style="margin-bottom:1rem">Как считается цена по остальным работам</h2>
-        <p class="mut measure">По направлениям, где нет ставки за квадратный метр, считаем по объёму: количество точек в электрике, погонные метры разводки, квадратура кровли, длина забора. Назовите объект и размеры, менеджер посчитает и назовёт вилку ещё до выезда.</p>
+        <h3 style="margin-bottom:.5rem">Как считается цена по остальным работам</h3>
+        <p class="mut" style="font-size:var(--sm)">По направлениям, где нет ставки за квадратный метр, считаем по объёму: количество точек в электрике, погонные метры разводки, квадратура кровли, длина забора. Назовите объект и размеры, менеджер посчитает и назовёт вилку ещё до выезда.</p>
       </div>
       <div>
-        <h2 style="margin-bottom:1rem">Что входит в смету</h2>
-        <p class="mut measure">Смета составляется до начала работ и фиксируется в договоре. В ней видно цену по каждой позиции, скрытых платежей нет. Материалы можно взять у нас же, тогда объём считается сразу под объект.</p>
+        <h3 style="margin-bottom:.5rem">Что входит в смету</h3>
+        <p class="mut" style="font-size:var(--sm)">Смета составляется до начала работ и фиксируется в договоре. В ней видно цену по каждой позиции, скрытых платежей нет. Материалы можно взять у нас же, тогда объём считается сразу под объект.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section class="section section--darker" id="raschet">
+<section class="sec sec--alt" id="raschet">
   <div class="wrap">
-    <div class="sec-head">
-      <p class="eyebrow">( Прикидка до замера )</p>
-      <h2 class="measure">Посчитайте порядок суммы за минуту</h2>
-      <p class="measure">Считает по прайсу выше. Это ориентир, а не смета.</p>
+    <div class="head">
+      <p class="kick">Прикидка до замера</p>
+      <h2>Посчитайте порядок суммы за минуту</h2>
+      <p>Считает по прайсу выше. Это ориентир, а не смета.</p>
     </div>
-
     <div class="calc">
       <div>
-        <div class="calc__field">
-          <span class="calc__legend">Площадь помещения</span>
-          <div class="calc__range">
+        <div class="cf">
+          <span class="cf__l">Площадь помещения</span>
+          <div class="rng">
             <input type="range" id="calc-area" min="18" max="220" step="1" value="55" aria-label="Площадь в квадратных метрах">
-            <span class="calc__area" data-calc-area>55 м²</span>
+            <b data-calc-area>55 м²</b>
           </div>
         </div>
-        <div class="calc__field">
-          <span class="calc__legend">Что за объект</span>
-          <div class="calc__opts" role="radiogroup" aria-label="Тип объекта">
+        <div class="cf">
+          <span class="cf__l">Что за объект</span>
+          <div class="opt" role="radiogroup" aria-label="Тип объекта">
             <label><input type="radio" name="obj" value="new" checked><span>Новостройка</span></label>
             <label><input type="radio" name="obj" value="old"><span>Вторичное жильё</span></label>
             <label><input type="radio" name="obj" value="cosm"><span>Освежить косметикой</span></label>
           </div>
         </div>
-        <div class="calc__field">
-          <span class="calc__legend">Уровень отделки</span>
-          <div class="calc__opts" role="radiogroup" aria-label="Уровень отделки">
+        <div class="cf">
+          <span class="cf__l">Уровень отделки</span>
+          <div class="opt" role="radiogroup" aria-label="Уровень отделки">
             <label><input type="radio" name="lvl" value="econom" checked><span>Эконом</span></label>
             <label><input type="radio" name="lvl" value="standart"><span>Стандарт</span></label>
             <label><input type="radio" name="lvl" value="elit"><span>Элит</span></label>
           </div>
         </div>
       </div>
-      <div class="calc__out">
-        <span class="calc__sub" style="margin:0">Ориентировочная стоимость работ</span>
-        <div class="calc__sum" data-calc-sum>от 550 000 ₽</div>
-        <div class="calc__sub" data-calc-rate>по ставке 10 000 ₽ за м²</div>
-        <button class="btn btn--primary btn--wide" type="button" data-modal="calc">Получить точный расчёт</button>
-        <p class="calc__disclaim" data-calc-note>Расчёт по прайсу компании. Точная стоимость зависит от объёма и сложности работ и определяется после осмотра объекта.</p>
+      <div class="res">
+        <span class="res__k">Ориентировочная стоимость работ</span>
+        <div class="res__v" data-calc-sum>от 550 000 ₽</div>
+        <div class="res__s" data-calc-rate>по ставке 10 000 ₽ за м²</div>
+        <button class="btn btn--fill btn--w" type="button" data-modal><span>Получить точный расчёт</span></button>
+        <p class="res__n" data-calc-note>Расчёт по прайсу компании. Точная стоимость зависит от объёма и сложности работ и определяется после осмотра объекта.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section class="section section--paper">
+<section class="sec sec--lt">
   <div class="wrap">
-    <div class="sec-head">
-      <p class="eyebrow">( Вопросы про деньги )</p>
-      <h2 class="measure">Что спрашивают о цене чаще всего</h2>
-    </div>
+    <div class="head"><p class="kick">Вопросы про деньги</p><h2>Что спрашивают о цене чаще всего</h2></div>
     <div class="faq">
       {% for f in content.home.faq[:3] %}
-      <details{% if loop.first %} open{% endif %}>
-        <summary>{{ f.q }}</summary>
-        <div class="faq__a">{{ f.a }}</div>
-      </details>
+      <details{% if loop.first %} open{% endif %}><summary>{{ f.q }}</summary><div class="faq__a">{{ f.a }}</div></details>
       {% endfor %}
-      <details>
-        <summary>Можно ли зафиксировать цену на весь срок работ?</summary>
-        <div class="faq__a">Смета фиксируется в договоре до начала работ. Если по ходу появляются работы, которых в смете не было, они согласуются с вами отдельно, а не добавляются в счёт по факту.</div>
-      </details>
+      <details><summary>Можно ли зафиксировать цену на весь срок работ?</summary><div class="faq__a">Смета фиксируется в договоре до начала работ. Если по ходу появляются работы, которых в смете не было, они согласуются с вами отдельно, а не добавляются в счёт по факту.</div></details>
     </div>
   </div>
 </section>
 
-<section class="section section--dark" id="zayavka">
-  <div class="wrap cta-band">
+<section class="sec" id="zayavka">
+  <div class="wrap band">
     <div>
-      <p class="eyebrow">( Следующий шаг )</p>
-      <h2 style="margin-bottom:1rem">Посчитаем смету по вашему объекту</h2>
-      <div class="lightline" style="margin-bottom:1.5rem"></div>
-      <p class="measure-s mut" style="margin-bottom:1.8rem">Приедем, снимем размеры, посмотрим состояние коммуникаций. Консультация бесплатная.</p>
-      <ul class="worklist" style="grid-template-columns:1fr">
-        {% for g in site.guarantees %}<li>{{ g }}</li>{% endfor %}
-      </ul>
+      <p class="kick">Следующий шаг</p>
+      <h2 style="margin-bottom:.7rem">Посчитаем смету по вашему объекту</h2>
+      <p class="measure-s mut" style="margin-bottom:1.4rem">Приедем, снимем размеры, посмотрим состояние коммуникаций. Консультация бесплатная.</p>
+      <ul class="chk">{% for g in site.guarantees %}<li>{{ g }}</li>{% endfor %}</ul>
     </div>
-    {{ form_block('ceny', 'Вызвать замерщика', 'Оставьте телефон, менеджер перезвонит в рабочее время и договорится об удобном времени.', 'Вызвать замерщика', 'Страница цен') }}
+    {{ form_block('p', 'Вызвать замерщика', 'Оставьте телефон, менеджер перезвонит в рабочее время и договорится об удобном времени.', 'Вызвать замерщика', 'Страница цен') }}
   </div>
 </section>
 {% endblock %}

@@ -19,10 +19,10 @@
 <link rel="icon" href="/assets/logo/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/assets/logo/apple-touch-icon.png">
 <link rel="preload" href="/assets/fonts/onest-400-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/assets/fonts/unbounded-600-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/css/fonts.css">
-<link rel="stylesheet" href="/assets/css/base.css">
-<link rel="stylesheet" href="/assets/css/blocks.css">
+<link rel="preload" href="/assets/fonts/forum-400-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/css/fonts.css?v={{ today }}">
+<link rel="stylesheet" href="/assets/css/base.css?v={{ today }}">
+<link rel="stylesheet" href="/assets/css/blocks.css?v={{ today }}">
 {% block head_extra %}{% endblock %}
 
 <script type="application/ld+json">{{ page.jsonld | safe }}</script>
@@ -31,27 +31,27 @@
 
 <header class="hdr">
   <div class="wrap hdr__row">
-    <a class="hdr__logo" href="/">
-      <img src="/assets/logo/mark-neon.svg" alt="РОСТ РЕМОПТСТРОЙТОРГ" width="34" height="40">
-      <span class="hdr__logo-txt"><b>РОСТ</b><span>ремоптстройторг</span></span>
+    <a class="lg" href="/">
+      <img src="/assets/logo/mark-brass.svg" alt="РОСТ РЕМОПТСТРОЙТОРГ" width="24" height="28">
+      <span><b>РОСТ</b><s>ремоптстройторг</s></span>
     </a>
-    <nav class="hdr__nav" aria-label="Основная навигация">
+    <nav class="nav" aria-label="Основная навигация">
       {%- for it in nav %}
       <a href="{{ it.url }}"{% if page.url == it.url or (it.url != '/' and page.url.startswith(it.url)) %} aria-current="page"{% endif %}>{{ it.label }}</a>
       {%- endfor %}
     </nav>
-    <div class="hdr__cta">
-      <a class="hdr__tel" href="tel:{{ site.phones.primary.tel }}">{{ site.phones.primary.display }}<small>Пн–Пт 9:00–18:00</small></a>
-      <a class="btn btn--primary" href="#zayavka" data-modal="call">Вызвать замерщика</a>
-      <button class="hdr__burger" type="button" aria-label="Меню" aria-expanded="false" data-burger><i></i><i></i><i></i></button>
+    <div class="hdr__end">
+      <a class="tel" href="tel:{{ site.phones.primary.tel }}">{{ site.phones.primary.display }}<s>Пн–Пт 9:00–18:00</s></a>
+      <button class="btn btn--fill" type="button" data-modal><span>Вызвать замерщика</span></button>
+      <button class="brg" type="button" aria-label="Меню" aria-expanded="false" data-brg><i></i><i></i><i></i></button>
     </div>
   </div>
   <div class="mnav" data-mnav>
     <div class="wrap">
       {%- for it in nav %}<a href="{{ it.url }}">{{ it.label }}</a>{% endfor %}
-      <div class="mnav__cta">
-        <a class="btn btn--primary btn--wide" href="tel:{{ site.phones.primary.tel }}">Позвонить {{ site.phones.primary.display }}</a>
-        <a class="btn btn--ghost btn--wide" href="#zayavka" data-modal="call">Вызвать замерщика</a>
+      <div class="mnav__b">
+        <a class="btn btn--gh btn--w" href="tel:{{ site.phones.primary.tel }}"><span>Позвонить {{ site.phones.primary.display }}</span></a>
+        <button class="btn btn--fill btn--w" type="button" data-modal><span>Вызвать замерщика</span></button>
       </div>
     </div>
   </div>
@@ -62,13 +62,13 @@
 </main>
 
 <div class="mbar">
-  <a class="btn btn--ghost" href="tel:{{ site.phones.primary.tel }}">Позвонить</a>
-  <button class="btn btn--primary" type="button" data-modal="mbar">Вызвать замерщика</button>
+  <a class="btn btn--gh" href="tel:{{ site.phones.primary.tel }}"><span>Позвонить</span></a>
+  <button class="btn btn--fill" type="button" data-modal><span>Вызвать замерщика</span></button>
 </div>
 
 {% include "_footer.html.j2" %}
 {% include "_modal.html.j2" %}
 
-<script src="/assets/js/app.js" defer></script>
+<script src="/assets/js/app.js?v={{ today }}" defer></script>
 </body>
 </html>

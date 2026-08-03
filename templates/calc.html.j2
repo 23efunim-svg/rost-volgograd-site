@@ -2,80 +2,68 @@
 {% from "_macros.html.j2" import form_block %}
 
 {% block content %}
-<section class="section section--dark" style="padding-bottom:calc(var(--section-y) * .5)">
+<section class="sec pgh" style="padding-bottom:calc(var(--sec) * .5)">
   <div class="wrap">
-    <nav class="crumbs" aria-label="Хлебные крошки"><a href="/">Главная</a><span>/</span><a href="/spravochnik/">Справочник</a><span>/</span>{{ calc.name }}</nav>
-    <h1 class="measure" style="margin-bottom:1.2rem">{{ calc.h1 }}</h1>
-    <div class="lightline" style="margin-bottom:1.4rem"></div>
-    <p class="measure mut">{{ calc.lead }}</p>
+    <nav class="crumbs"><a href="/">Главная</a><i>/</i><a href="/spravochnik/">Справочник</a><i>/</i>{{ calc.name }}</nav>
+    <h1>{{ calc.h1 }}</h1>
+    <p>{{ calc.lead }}</p>
   </div>
 </section>
 
-<section class="section section--darker" style="padding-top:calc(var(--section-y) * .6)" id="raschet">
+<section class="sec sec--alt" id="raschet" style="padding-top:calc(var(--sec) * .7)">
   <div class="wrap">
     <div class="calc" data-calc="{{ calc.slug }}">
       <div>
         {% for f in calc.fields %}
-        <div class="calc__field">
-          <label class="calc__legend" for="f-{{ f.id }}">{{ f.label }}</label>
-          {% if f.type == 'select' %}
-          <select id="f-{{ f.id }}" data-cf="{{ f.id }}" style="width:100%;max-width:420px;padding:.9rem 1rem;background:rgba(255,255,255,.05);border:1px solid var(--line-dark);border-radius:10px;color:var(--text-light)">
-            {% for o in f.options %}<option value="{{ o.v }}">{{ o.t }}</option>{% endfor %}
-          </select>
-          {% else %}
-          <input id="f-{{ f.id }}" data-cf="{{ f.id }}" type="number" inputmode="decimal"
-                 value="{{ f.value }}" min="{{ f.min }}" max="{{ f.max }}" step="{{ f.step }}"
-                 style="width:100%;max-width:420px;padding:.9rem 1rem;background:rgba(255,255,255,.05);border:1px solid var(--line-dark);border-radius:10px;color:var(--text-light)">
-          {% endif %}
-          {% if f.hint %}<p class="calc__disclaim" style="margin-top:.5rem">{{ f.hint }}</p>{% endif %}
+        <div class="cf">
+          <label class="cf__l" for="f-{{ f.id }}">{{ f.label }}</label>
+          <input id="f-{{ f.id }}" data-cf="{{ f.id }}" class="num-in" type="number" inputmode="decimal"
+                 value="{{ f.value }}" min="{{ f.min }}" max="{{ f.max }}" step="{{ f.step }}">
+          {% if f.hint %}<p class="res__n" style="margin-top:.4rem">{{ f.hint }}</p>{% endif %}
         </div>
         {% endfor %}
       </div>
 
-      <div class="calc__out">
-        <span class="calc__sub" style="margin:0">{{ calc.result_label }}</span>
-        <div class="calc__sum" data-cres>—</div>
-        <div class="calc__sub" data-cres2></div>
-        <button class="btn btn--primary btn--wide" type="button" data-modal="calcpage">Узнать цену и наличие</button>
-        <p class="calc__disclaim">{{ calc.formula_note }}</p>
+      <div class="res">
+        <span class="res__k">{{ calc.result_label }}</span>
+        <div class="res__v" data-cres>—</div>
+        <div class="res__s" data-cres2></div>
+        <button class="btn btn--fill btn--w" type="button" data-modal><span>Узнать цену и наличие</span></button>
+        <p class="res__n">{{ calc.formula_note }}</p>
       </div>
     </div>
   </div>
 </section>
 
-<section class="section section--paper">
+<section class="sec sec--lt">
   <div class="wrap prose">
     <h2 style="margin-top:0">{{ calc.article_h2 }}</h2>
     {% for p in calc.article %}<p>{{ p }}</p>{% endfor %}
 
     <h3>Формула, по которой считает калькулятор</h3>
-    <p style="font-family:ui-monospace,Consolas,monospace;background:var(--sand-2);padding:1rem 1.2rem;border-radius:10px;font-size:.95rem">{{ calc.formula }}</p>
-    <p class="mut">{{ calc.formula_note }}</p>
+    <p style="font-family:ui-monospace,Consolas,monospace;border-left:2px solid var(--brass);padding:.6rem 0 .6rem .9rem;font-size:var(--sm)">{{ calc.formula }}</p>
+    <p class="mut" style="font-size:var(--sm)">{{ calc.formula_note }}</p>
   </div>
 </section>
 
-<section class="section section--sand">
+<section class="sec sec--alt">
   <div class="wrap">
-    <div class="sec-head">
-      <p class="eyebrow">( Другие расчёты )</p>
-      <h2 class="measure">Посчитать что-то ещё</h2>
-    </div>
-    <div class="chips">
+    <div class="head"><p class="kick">Другие расчёты</p><h2>Посчитать что-то ещё</h2></div>
+    <div class="tags">
       {% for c in calcs if c.slug != calc.slug %}<a href="/spravochnik/{{ c.slug }}/">{{ c.name }}</a>{% endfor %}
       <a href="/stroymaterialy/">Каталог материалов</a>
     </div>
   </div>
 </section>
 
-<section class="section section--dark" id="zayavka">
-  <div class="wrap cta-band">
+<section class="sec" id="zayavka">
+  <div class="wrap band">
     <div>
-      <p class="eyebrow">( Материалы )</p>
-      <h2 style="margin-bottom:1rem">Посчитаем комплект и назовём цену на сегодня</h2>
-      <div class="lightline" style="margin-bottom:1.5rem"></div>
+      <p class="kick">Материалы</p>
+      <h2 style="margin-bottom:.7rem">Посчитаем комплект и назовём цену на сегодня</h2>
       <p class="measure-s mut">Скажите объём из расчёта, менеджер проверит цифры, подберёт позиции и скажет, что ещё понадобится.</p>
     </div>
-    {{ form_block('calcform', 'Узнать цену и наличие', 'Напишите объём из расчёта и объект. Ответим ценой и наличием на день обращения.', 'Отправить запрос', 'Калькулятор: ' + calc.name) }}
+    {{ form_block('cl', 'Узнать цену и наличие', 'Напишите объём из расчёта и объект. Ответим ценой и наличием на день обращения.', 'Отправить запрос', 'Калькулятор: ' + calc.name) }}
   </div>
 </section>
 {% endblock %}

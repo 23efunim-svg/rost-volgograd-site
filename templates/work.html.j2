@@ -2,38 +2,35 @@
 {% from "_macros.html.j2" import form_block %}
 
 {% block content %}
-<section class="section section--dark" style="padding-bottom:calc(var(--section-y) * .5)">
+<section class="sec pgh" style="padding-bottom:calc(var(--sec) * .5)">
   <div class="wrap">
-    <nav class="crumbs" aria-label="Хлебные крошки"><a href="/">Главная</a><span>/</span><a href="/raboty/">Работы</a><span>/</span>{{ obj.title }}</nav>
-    <p class="eyebrow">( {{ meta.type }} )</p>
-    <h1 class="measure" style="margin-bottom:1.3rem">{{ obj.title }}</h1>
-    <div class="lightline" style="margin-bottom:1.5rem"></div>
-    <p class="measure mut" style="margin-bottom:2rem">{{ meta.lead }}</p>
+    <nav class="crumbs"><a href="/">Главная</a><i>/</i><a href="/raboty/">Работы</a><i>/</i>{{ obj.title }}</nav>
+    <p class="kick">{{ meta.type }}</p>
+    <h1>{{ obj.title }}</h1>
+    <p>{{ meta.lead }}</p>
 
     {% if meta.area or meta.term or meta.price %}
-    <dl class="hero__facts" style="max-width:760px">
-      {% if meta.area %}<div><dt>Площадь</dt><dd><b>{{ meta.area }}</b></dd></div>{% endif %}
-      {% if meta.term %}<div><dt>Срок</dt><dd><b>{{ meta.term }}</b></dd></div>{% endif %}
-      {% if meta.price %}<div><dt>Стоимость работ</dt><dd><b>{{ meta.price }}</b></dd></div>{% endif %}
-      <div><dt>Фотографий</dt><dd><b>{{ obj.photos | length }}</b></dd></div>
+    <dl class="facts" style="margin-top:1.3rem;max-width:720px">
+      {% if meta.area %}<div><dt>Площадь</dt><dd>{{ meta.area }}</dd></div>{% endif %}
+      {% if meta.term %}<div><dt>Срок</dt><dd>{{ meta.term }}</dd></div>{% endif %}
+      {% if meta.price %}<div><dt>Стоимость работ</dt><dd>{{ meta.price }}</dd></div>{% endif %}
+      <div><dt>Фотографий</dt><dd>{{ obj.photos | length }}</dd></div>
     </dl>
     {% endif %}
   </div>
 </section>
 
-<section class="section section--dark" style="padding-top:0">
+<section class="sec" style="padding-top:calc(var(--sec) * .5)">
   <div class="wrap">
-    <div class="grid" style="grid-template-columns:.8fr 1.2fr;gap:clamp(1.5rem,1rem+3vw,4rem);align-items:start;margin-bottom:var(--gap)">
+    <div class="grid" style="grid-template-columns:.85fr 1.15fr;gap:clamp(1.4rem,1rem+2.4vw,3rem);align-items:start;margin-bottom:1.6rem">
       <div>
-        <p class="eyebrow">( Что делали )</p>
-        <ul class="worklist" style="grid-template-columns:1fr">
-          {% for w in meta.works %}<li>{{ w }}</li>{% endfor %}
-        </ul>
+        <p class="kick">Что делали</p>
+        <ul class="chk">{% for w in meta.works %}<li>{{ w }}</li>{% endfor %}</ul>
       </div>
       <div>
-        <p class="eyebrow">( Материалы )</p>
-        <p class="mut" style="margin-bottom:1.2rem">Материалы на этот объект шли со своей базы. Так объём считается сразу под работу, а бригада не ждёт поставку.</p>
-        <a class="btn btn--ghost" href="/stroymaterialy/">Смотреть каталог материалов</a>
+        <p class="kick">Материалы</p>
+        <p class="mut" style="font-size:var(--sm);margin-bottom:1rem">Материалы на этот объект шли со своей базы. Так объём считается сразу под работу, а бригада не ждёт поставку.</p>
+        <a class="btn btn--gh" href="/stroymaterialy/"><span>Каталог материалов</span></a>
       </div>
     </div>
 
@@ -50,27 +47,21 @@
   </div>
 </section>
 
-<section class="section section--sand">
+<section class="sec sec--lt">
   <div class="wrap">
-    <div class="sec-head">
-      <p class="eyebrow">( Другие объекты )</p>
-      <h2 class="measure">Ещё работы в Волгограде и области</h2>
-    </div>
-    <div class="chips">
-      {% for s, o in objects.items() if s != slug %}<a href="/raboty/{{ s }}/">{{ o.title }}</a>{% endfor %}
-    </div>
+    <div class="head"><p class="kick">Другие объекты</p><h2>Ещё работы в Волгограде и области</h2></div>
+    <div class="tags">{% for s, o in objects.items() if s != slug %}<a href="/raboty/{{ s }}/">{{ o.title }}</a>{% endfor %}</div>
   </div>
 </section>
 
-<section class="section section--dark" id="zayavka">
-  <div class="wrap cta-band">
+<section class="sec" id="zayavka">
+  <div class="wrap band">
     <div>
-      <p class="eyebrow">( Следующий шаг )</p>
-      <h2 style="margin-bottom:1rem">Посчитаем такой же объём по вашему объекту</h2>
-      <div class="lightline" style="margin-bottom:1.5rem"></div>
+      <p class="kick">Следующий шаг</p>
+      <h2 style="margin-bottom:.7rem">Посчитаем такой же объём по вашему объекту</h2>
       <p class="measure-s mut">Скажите площадь и что нужно сделать. Менеджер назовёт вилку по телефону и договорится о замере.</p>
     </div>
-    {{ form_block('work', 'Вызвать замерщика', 'Оставьте телефон, перезвоним в рабочее время и уточним детали объекта.', 'Вызвать замерщика', 'Объект: ' + obj.title) }}
+    {{ form_block('o', 'Вызвать замерщика', 'Оставьте телефон, перезвоним в рабочее время и уточним детали объекта.', 'Вызвать замерщика', 'Объект: ' + obj.title) }}
   </div>
 </section>
 {% endblock %}

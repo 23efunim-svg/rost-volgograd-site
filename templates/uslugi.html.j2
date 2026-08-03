@@ -1,68 +1,61 @@
 {% extends "base.html.j2" %}
-{% from "_macros.html.j2" import form_block, icon %}
+{% from "_macros.html.j2" import form_block %}
 
 {% block content %}
-<section class="section section--dark" style="padding-bottom:0">
+<section class="sec pgh" style="padding-bottom:calc(var(--sec) * .6)">
   <div class="wrap">
-    <nav class="crumbs" aria-label="Хлебные крошки"><a href="/">Главная</a><span>/</span>Услуги и цены</nav>
-    <p class="eyebrow">( Волгоград и область )</p>
-    <h1 class="measure" style="margin-bottom:1.3rem">Все строительные и ремонтные работы в одном подрядчике</h1>
-    <div class="lightline" style="margin-bottom:1.5rem"></div>
-    <p class="measure mut" style="margin-bottom:2.5rem">От косметики в однокомнатной до дома с нуля вместе с забором и брусчаткой. Материалы берём со своей базы на Циолковского, поэтому в смете видно и работу, и материал.</p>
+    <nav class="crumbs"><a href="/">Главная</a><i>/</i>Услуги</nav>
+    <p class="kick">Волгоград и область</p>
+    <h1>Все строительные и ремонтные работы в одном подрядчике</h1>
+    <p>От косметики в однокомнатной до дома с нуля вместе с забором и брусчаткой. Материалы берём со своей базы на Циолковского, поэтому в смете видно и работу, и материал.</p>
   </div>
 </section>
 
-<section class="section section--dark" style="padding-top:var(--section-y)">
+<section class="sec sec--lt" style="padding-top:calc(var(--sec) * .7)">
   <div class="wrap">
-    {% set svc_icons = {'remont-kvartir':'home','stroitelstvo-domov':'crane','otdelochnye-raboty':'brush','elektromontazh':'bolt','santehnicheskie-raboty':'drop','krovlya-i-fasady':'roof','zabory-i-blagoustroystvo':'fence','kommercheskie-pomeshcheniya':'office'} %}
-    <div class="cat">
+    <div class="svc">
       {% for s in services.services %}
-      <a class="cat__card reveal" href="/uslugi/{{ s.slug }}/">
-        {{ icon(svc_icons[s.slug]) }}
-        <h3>{{ s.nav }}</h3>
-        <ul>{% for w in s.works[:4] %}<li>{{ w }}</li>{% endfor %}</ul>
-        <em>{% if s.price_ref == 'remont' %}от 7 000 ₽ за м² →{% else %}Смотреть состав работ →{% endif %}</em>
+      <a href="/uslugi/{{ s.slug }}/">
+        <span class="svc__n">{{ '%02d' % loop.index }}</span>
+        <span class="svc__t">{{ s.nav }}<s>{{ s.works[:4] | join(', ') | lower }}</s></span>
+        <span class="svc__p">{% if s.price_ref == 'remont' %}от 7 000 ₽/м²{% else %}цена после замера{% endif %}</span>
       </a>
       {% endfor %}
     </div>
+
+    <div class="head" style="margin-top:calc(var(--sec) * .8)">
+      <p class="kick">Цены на ремонт</p>
+      <h2>Три уровня отделки, ставка за квадратный метр</h2>
+      <p>{{ services.price_tables.remont.note }}</p>
+    </div>
+    <div class="pr-wrap">
+      <table class="pr">
+        <thead><tr><th scope="col">Уровень</th><th scope="col">Косметический</th><th scope="col">Новостройка</th><th scope="col">Вторичное жильё</th></tr></thead>
+        <tbody>
+          {% for lv in services.price_tables.remont.levels %}
+          {% set rows = {} %}{% for r in lv.rows %}{% set _ = rows.update({r.label: r.price}) %}{% endfor %}
+          <tr>
+            <th scope="row">{{ lv.name }}<span class="pr__lvl">{{ lv.desc }}</span></th>
+            <td{% if 'Мелкий косметический ремонт' not in rows %} class="na"{% endif %}>{% if 'Мелкий косметический ремонт' in rows %}от {{ rows['Мелкий косметический ремонт'] | money }} ₽{% else %}по запросу{% endif %}</td>
+            <td>от {{ rows['Новостройка'] | money }} ₽</td>
+            <td>от {{ rows['Вторичное жильё'] | money }} ₽</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
   </div>
 </section>
 
-<section class="section section--sand">
-  <div class="wrap">
-    <div class="sec-head">
-      <p class="eyebrow">( Цены на ремонт )</p>
-      <h2 class="measure">Три уровня, из которых выбирают чаще всего</h2>
-      <p class="measure">{{ services.price_tables.remont.note }}</p>
-    </div>
-    <div class="price">
-      {% for lv in services.price_tables.remont.levels %}
-      <div class="price__card{% if lv.key == 'standart' %} price__card--hot{% endif %}">
-        <div class="price__name">{{ lv.name }}</div>
-        <p class="price__desc">{{ lv.desc }}</p>
-        <ul class="price__rows">
-          {% for r in lv.rows %}<li><span>{{ r.label }}</span><b>от {{ r.price | money }} ₽/м²</b></li>{% endfor %}
-        </ul>
-        <p class="price__note">Состав работ по вашему объекту фиксируется в смете до начала работ.</p>
-      </div>
-      {% endfor %}
-    </div>
-    <p class="mut" style="margin-top:1.5rem;font-size:.9rem">По остальным направлениям цена считается по объёму: количество точек, погонные метры, квадратура кровли или забора. Скажите объект, и менеджер посчитает.</p>
-  </div>
-</section>
-
-<section class="section section--dark" id="zayavka">
-  <div class="wrap cta-band">
+<section class="sec" id="zayavka">
+  <div class="wrap band">
     <div>
-      <p class="eyebrow">( Следующий шаг )</p>
-      <h2 style="margin-bottom:1rem">Приедем, посмотрим объект и посчитаем</h2>
-      <div class="lightline" style="margin-bottom:1.5rem"></div>
-      <p class="measure-s mut" style="margin-bottom:1.8rem">Консультация бесплатная. На замере уточним состав работ и покажем, из чего складывается сумма.</p>
-      <ul class="worklist" style="grid-template-columns:1fr">
-        {% for g in site.guarantees %}<li>{{ g }}</li>{% endfor %}
-      </ul>
+      <p class="kick">Следующий шаг</p>
+      <h2 style="margin-bottom:.7rem">Приедем, посмотрим объект и посчитаем</h2>
+      <p class="measure-s mut" style="margin-bottom:1.4rem">Консультация бесплатная. На замере уточним состав работ и покажем, из чего складывается сумма.</p>
+      <ul class="chk">{% for g in site.guarantees %}<li>{{ g }}</li>{% endfor %}</ul>
     </div>
-    {{ form_block('uslugi', 'Вызвать замерщика', 'Оставьте телефон, менеджер перезвонит в рабочее время и договорится об удобном времени.', 'Вызвать замерщика', 'Страница услуг') }}
+    {{ form_block('u', 'Вызвать замерщика', 'Оставьте телефон, менеджер перезвонит в рабочее время и договорится об удобном времени.', 'Вызвать замерщика', 'Страница услуг') }}
   </div>
 </section>
 {% endblock %}

@@ -3,17 +3,17 @@
 {% block head_extra %}<meta name="robots" content="noindex, follow">{% endblock %}
 
 {% block content %}
-<section class="section section--dark" style="padding-bottom:calc(var(--section-y) * .5)">
+<section class="sec pgh" style="padding-bottom:calc(var(--sec) * .5)">
   <div class="wrap">
-    <nav class="crumbs" aria-label="Хлебные крошки"><a href="/">Главная</a><span>/</span>{% if doc == 'policy' %}Политика обработки персональных данных{% else %}Согласие на обработку персональных данных{% endif %}</nav>
-    <h1 class="measure" style="font-size:clamp(1.7rem,1.2rem+2vw,2.6rem)">
+    <nav class="crumbs"><a href="/">Главная</a><i>/</i>{% if doc == 'policy' %}Политика обработки персональных данных{% else %}Согласие на обработку персональных данных{% endif %}</nav>
+    <h1>
       {% if doc == 'policy' %}Политика обработки персональных данных{% else %}Согласие на обработку персональных данных{% endif %}
     </h1>
-    <div class="lightline" style="margin-top:1.3rem"></div>
+    
   </div>
 </section>
 
-<section class="section section--paper" style="padding-top:calc(var(--section-y) * .7)">
+<section class="sec sec--lt" style="padding-top:calc(var(--sec) * .7)">
   <div class="wrap prose">
 
 {% if doc == 'policy' %}
@@ -100,7 +100,7 @@
     <p>Я подтверждаю, что ознакомлен с <a href="/politika/">Политикой обработки персональных данных</a> и что предоставление данных является добровольным. Согласие не распространяется на рассылку рекламных материалов, если я отдельно её не запросил.</p>
 {% endif %}
 
-    <p style="margin-top:2.5rem"><a class="btn btn--ghost" href="/">Вернуться на главную</a></p>
+    <p style="margin-top:2.5rem"><a class="btn btn--gh" href="/"><span>Вернуться на главную</span></a></p>
   </div>
 </section>
 {% endblock %}

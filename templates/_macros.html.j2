@@ -1,67 +1,45 @@
 {% macro form_block(id, title, subtitle, button, source='') %}
-<form class="lead-form" method="post" action="/api/lead.php" data-lead-form novalidate>
-  <h3 id="{{ id }}-title">{{ title }}</h3>
+<form class="frm" method="post" action="/api/lead.php" data-lead novalidate>
+  <h3>{{ title }}</h3>
   <p>{{ subtitle }}</p>
 
   <input type="hidden" name="source" value="{{ source or title }}">
-  <input type="hidden" name="page" value="" data-fill-page>
-  <input type="hidden" name="ts" value="" data-fill-ts>
+  <input type="hidden" name="page" value="" data-page>
+  <input type="hidden" name="ts" value="" data-ts>
   <div class="hp" aria-hidden="true"><label>Не заполняйте это поле<input type="text" name="company" tabindex="-1" autocomplete="off"></label></div>
 
-  <div class="field">
-    <label for="{{ id }}-name">Как к вам обращаться</label>
-    <input id="{{ id }}-name" name="name" type="text" autocomplete="name" placeholder="Имя">
+  <div class="fld">
+    <label for="{{ id }}-n">Как к вам обращаться</label>
+    <input id="{{ id }}-n" name="name" type="text" autocomplete="name" placeholder="Имя">
   </div>
 
-  <div class="field" data-field>
-    <label for="{{ id }}-phone">Телефон <span aria-hidden="true">*</span></label>
-    <input id="{{ id }}-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel"
+  <div class="fld" data-fld>
+    <label for="{{ id }}-p">Телефон *</label>
+    <input id="{{ id }}-p" name="phone" type="tel" inputmode="tel" autocomplete="tel"
            placeholder="+7 (___) ___-__-__" required aria-required="true">
-    <span class="field__err">Проверьте номер: нужно 11 цифр, начиная с 7 или 8</span>
+    <span class="fld__e">Проверьте номер: нужно 11 цифр, начиная с 7 или 8</span>
   </div>
 
-  <div class="field">
-    <label for="{{ id }}-note">Что нужно сделать <span class="mut">(не обязательно)</span></label>
-    <textarea id="{{ id }}-note" name="note" rows="2" placeholder="Например: двухкомнатная квартира, вторичка, нужен ремонт под ключ"></textarea>
+  <div class="fld">
+    <label for="{{ id }}-t">Что нужно сделать, не обязательно</label>
+    <textarea id="{{ id }}-t" name="note" rows="2" placeholder="Например: двушка на вторичке, ремонт под ключ"></textarea>
   </div>
 
-  <div class="field">
+  <div class="fld">
     <label>Как удобнее связаться</label>
-    <div class="calc__opts">
+    <div class="opt">
       <label><input type="radio" name="channel" value="Звонок" checked><span>Звонок</span></label>
-      <label><input type="radio" name="channel" value="МАКС"><span>Написать в МАКС</span></label>
-      <label><input type="radio" name="channel" value="ВКонтакте"><span>Написать во ВКонтакте</span></label>
+      <label><input type="radio" name="channel" value="МАКС"><span>МАКС</span></label>
+      <label><input type="radio" name="channel" value="ВКонтакте"><span>ВКонтакте</span></label>
     </div>
   </div>
 
-  <label class="consent">
+  <label class="cns">
     <input type="checkbox" name="consent" value="1" required>
-    <span>Я даю <a href="/soglasie/" target="_blank">согласие на обработку персональных данных</a> и ознакомлен с <a href="/politika/" target="_blank">политикой обработки данных</a></span>
+    <span>Даю <a href="/soglasie/" target="_blank">согласие на обработку персональных данных</a> и ознакомлен с <a href="/politika/" target="_blank">политикой</a></span>
   </label>
 
-  <button class="btn btn--primary btn--wide" type="submit">{{ button }}</button>
-  <div class="form-msg" data-form-msg role="status"></div>
+  <button class="btn btn--fill btn--w" type="submit"><span>{{ button }}</span></button>
+  <div class="msg" data-msg role="status"></div>
 </form>
-{% endmacro %}
-
-
-{% macro icon(name) %}
-{%- if name == 'bolt' %}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z" stroke-linejoin="round"/></svg>
-{%- elif name == 'drop' %}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3s6 6.5 6 10.5a6 6 0 0 1-12 0C6 9.5 12 3 12 3Z" stroke-linejoin="round"/></svg>
-{%- elif name == 'roof' %}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12 12 4l10 8M5 11v9h14v-9M9 20v-6h6v6" stroke-linejoin="round"/></svg>
-{%- elif name == 'beam' %}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 18h18M7 6v12M17 6v12M10 6l4 12" stroke-linejoin="round"/></svg>
-{%- elif name == 'layers' %}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 9 5-9 5-9-5 9-5ZM3 13l9 5 9-5M3 17l9 5 9-5" stroke-linejoin="round"/></svg>
-{%- elif name == 'sheet' %}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3h16v18H4zM4 9h16M9 9v12" stroke-linejoin="round"/></svg>
-{%- elif name == 'bucket' %}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14l-1.4 13.2a1 1 0 0 1-1 .8H7.4a1 1 0 0 1-1-.8L5 7ZM8 7V5a4 4 0 0 1 8 0v2" stroke-linejoin="round"/></svg>
-{%- elif name == 'tile' %}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3h8v8H3zM13 3h8v8h-8zM3 13h8v8H3zM13 13h8v8h-8z" stroke-linejoin="round"/></svg>
-{%- elif name == 'fence' %}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21V8l3-4 3 4v13M14 21V8l3-4 3 4v13M2 12h20M2 16h20" stroke-linejoin="round"/></svg>
-{%- elif name == 'screw' %}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6v4l-3 2-3-2V3ZM12 9v12M9 12h6M9 15h6M9 18h6" stroke-linejoin="round"/></svg>
-{%- elif name == 'wood' %}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h18v10H3zM7 7v10M11 7v10M15 7v10M19 7v10" stroke-linejoin="round"/></svg>
-{%- elif name == 'brick' %}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18v5H3zM3 10h18v5H3zM3 15h18v5H3zM9 5v5M15 5v5M6 10v5M12 10v5M18 10v5M9 15v5M15 15v5" stroke-linejoin="round"/></svg>
-{%- elif name == 'home' %}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11 12 3l9 8M6 10v10h12V10M10 20v-6h4v6" stroke-linejoin="round"/></svg>
-{%- elif name == 'brush' %}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20c3 0 4-2 4-4l8-11 4 3-8 11c-2 1-2 1-4 1H4Z" stroke-linejoin="round"/></svg>
-{%- elif name == 'crane' %}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21V4h14M4 8h10M12 4v6M18 4l3 4h-6M12 10v5a2 2 0 0 0 2 2h2" stroke-linejoin="round"/></svg>
-{%- elif name == 'office' %}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21V4h10v17M14 9h6v12M7 8h4M7 12h4M7 16h4M17 13h1M17 17h1" stroke-linejoin="round"/></svg>
-{%- else %}<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/></svg>
-{%- endif %}
 {% endmacro %}

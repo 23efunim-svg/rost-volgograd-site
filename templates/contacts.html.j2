@@ -2,56 +2,38 @@
 {% from "_macros.html.j2" import form_block %}
 
 {% block content %}
-<section class="section section--dark" style="padding-bottom:calc(var(--section-y) * .55)">
+<section class="sec pgh" style="padding-bottom:calc(var(--sec) * .5)">
   <div class="wrap">
-    <nav class="crumbs" aria-label="Хлебные крошки"><a href="/">Главная</a><span>/</span>Контакты</nav>
-    <p class="eyebrow">( Волгоград )</p>
-    <h1 class="measure" style="margin-bottom:1.3rem">Приезжайте на базу или звоните нужному отделу напрямую</h1>
-    <div class="lightline" style="margin-bottom:1.5rem"></div>
-    <p class="measure mut">У ремонта и у продажи материалов разные телефоны, чтобы не пересылать звонок между отделами.</p>
+    <nav class="crumbs"><a href="/">Главная</a><i>/</i>Контакты</nav>
+    <p class="kick">Волгоград</p>
+    <h1>Приезжайте на базу или звоните нужному отделу напрямую</h1>
+    <p>У ремонта и у продажи материалов разные телефоны, чтобы не пересылать звонок между отделами.</p>
   </div>
 </section>
 
-<section class="section section--paper" style="padding-top:calc(var(--section-y) * .7)">
+<section class="sec sec--lt" style="padding-top:calc(var(--sec) * .6)">
   <div class="wrap">
-    <div class="contact-grid">
-      <div class="contact-card">
+    <div class="cc">
+      <div>
         <h3>Ремонт и строительство</h3>
-        <ul>
-          {% for p in site.phones.works %}
-          <li><a href="tel:{{ p.tel }}">{{ p.display }}</a><small>{{ p.name }}, {{ p.role }}</small></li>
-          {% endfor %}
-        </ul>
+        <ul>{% for p in site.phones.works %}<li><a href="tel:{{ p.tel }}">{{ p.display }}</a><s>{{ p.name }}, {{ p.role }}</s></li>{% endfor %}</ul>
       </div>
-
-      <div class="contact-card">
+      <div>
         <h3>Отдел продаж материалов</h3>
-        <ul>
-          {% for p in site.phones.sales %}
-          <li><a href="tel:{{ p.tel }}">{{ p.display }}</a><small>{{ p.name }}, {{ p.role }}</small></li>
-          {% endfor %}
-        </ul>
+        <ul>{% for p in site.phones.sales %}<li><a href="tel:{{ p.tel }}">{{ p.display }}</a><s>{{ p.name }}, {{ p.role }}</s></li>{% endfor %}</ul>
       </div>
-
-      <div class="contact-card">
-        <h3>База, почта, режим работы</h3>
+      <div>
+        <h3>База, почта, режим</h3>
         <ul>
-          <li><a href="mailto:{{ site.email }}">{{ site.email }}</a><small>заявки и запросы счетов</small></li>
-          <li><b>{{ site.office.address }}</b><small>{{ site.office.how_to_find }}</small></li>
-          {% for hh in site.office.hours %}
-          <li>{{ hh.days }}<small>{{ hh.time }}</small></li>
-          {% endfor %}
-          <li><a href="{{ site.social.vk }}" target="_blank" rel="noopener">Сообщество ВКонтакте</a></li>
-          <li><a href="{{ site.social.max }}" target="_blank" rel="noopener">Канал в МАКС</a></li>
+          <li><a href="mailto:{{ site.email }}">{{ site.email }}</a><s>заявки и запросы счетов</s></li>
+          <li><b>{{ site.office.address }}</b><s>{{ site.office.how_to_find }}</s></li>
+          {% for hh in site.office.hours %}<li>{{ hh.days }}<s>{{ hh.time }}</s></li>{% endfor %}
+          <li><a href="{{ site.social.vk }}" target="_blank" rel="noopener">ВКонтакте</a> · <a href="{{ site.social.max }}" target="_blank" rel="noopener">МАКС</a></li>
         </ul>
       </div>
     </div>
-  </div>
-</section>
 
-<section class="section section--sand" style="padding-top:0">
-  <div class="wrap">
-    <div class="map">
+    <div class="map" style="margin-top:1.2rem">
       <iframe title="Карта проезда: Волгоград, улица Циолковского, 1А"
               src="https://yandex.ru/map-widget/v1/?text=%D0%92%D0%BE%D0%BB%D0%B3%D0%BE%D0%B3%D1%80%D0%B0%D0%B4%2C%20%D1%83%D0%BB%D0%B8%D1%86%D0%B0%20%D0%A6%D0%B8%D0%BE%D0%BB%D0%BA%D0%BE%D0%B2%D1%81%D0%BA%D0%BE%D0%B3%D0%BE%2C%201%D0%90&z=17"
               loading="lazy" allowfullscreen></iframe>
@@ -59,26 +41,22 @@
   </div>
 </section>
 
-<section class="section section--paper">
-  <div class="wrap">
-    <div class="grid" style="grid-template-columns:1fr 1fr;gap:clamp(1.5rem,1rem+3vw,4rem);align-items:start">
-      <div class="prose">
-        <p class="eyebrow">( Реквизиты )</p>
-        <h2 style="margin-top:0">Кому вы платите</h2>
-        <ul>
-          <li>{{ site.legal.name }}</li>
-          <li>ОГРНИП {{ site.legal.ogrnip }}</li>
-          <li>ИНН {{ site.legal.inn }}</li>
-          <li>Адрес регистрации: {{ site.legal.address_legal }}</li>
-          <li>Расчётный счёт {{ site.legal.account }}</li>
-          <li>{{ site.legal.bank }}, БИК {{ site.legal.bik }}</li>
-        </ul>
-        <p>Для организаций выставляем счёт, работаем по безналичному расчёту, передаём накладную и закрывающие документы.</p>
-      </div>
-      <div>
-        {{ form_block('contacts', 'Написать нам', 'Оставьте телефон, менеджер перезвонит в рабочее время. Если удобнее переписка, выберите мессенджер.', 'Отправить', 'Контакты') }}
-      </div>
+<section class="sec">
+  <div class="wrap band">
+    <div>
+      <p class="kick">Реквизиты</p>
+      <h2 style="margin-bottom:.8rem">Кому вы платите</h2>
+      <ul class="chk">
+        <li>{{ site.legal.name }}</li>
+        <li>ОГРНИП {{ site.legal.ogrnip }}</li>
+        <li>ИНН {{ site.legal.inn }}</li>
+        <li>Адрес регистрации: {{ site.legal.address_legal }}</li>
+        <li>Расчётный счёт {{ site.legal.account }}</li>
+        <li>{{ site.legal.bank }}, БИК {{ site.legal.bik }}</li>
+      </ul>
+      <p class="mut" style="font-size:var(--sm);margin-top:1rem">Для организаций выставляем счёт, работаем по безналичному расчёту, передаём накладную и закрывающие документы.</p>
     </div>
+    {{ form_block('k', 'Написать нам', 'Оставьте телефон, менеджер перезвонит в рабочее время. Если удобнее переписка, выберите мессенджер.', 'Отправить', 'Контакты') }}
   </div>
 </section>
 {% endblock %}

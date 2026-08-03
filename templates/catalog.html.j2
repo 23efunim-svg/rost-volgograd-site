@@ -1,99 +1,87 @@
 {% extends "base.html.j2" %}
-{% from "_macros.html.j2" import form_block, icon %}
+{% from "_macros.html.j2" import form_block %}
 
 {% block content %}
-<section class="hero">
-  <div class="hero__media">
-    <img src="/assets/photo/objects/yantarnaya/yantarnaya-09.webp" alt="" width="1200" height="1600" fetchpriority="high">
-  </div>
-  <div class="wrap hero__inner" style="padding-top:1rem">
-    <nav class="crumbs" aria-label="Хлебные крошки"><a href="/">Главная</a><span>/</span>Стройматериалы</nav>
-    <p class="hero__eyebrow">( База на <b>Циолковского, 1А</b> )</p>
-    <h1 style="max-width:19ch">{{ catalog.intro.h1 }}</h1>
-    <div class="lightline" style="margin:1.4rem 0 1.6rem"></div>
-    <p class="hero__lead">{{ catalog.intro.lead }}</p>
-    <div class="hero__acts">
-      <button class="btn btn--primary" type="button" data-modal="cat">Узнать цену и наличие</button>
-      <a class="btn btn--ghost" href="tel:{{ site.phones.sales[0].tel }}">{{ site.phones.sales[0].display }}, {{ site.phones.sales[0].name }}</a>
+<section class="hero" style="min-height:auto">
+  <div class="hero__bg"><img src="/assets/photo/objects/yantarnaya/yantarnaya-09.webp" alt="" width="1200" height="1600" fetchpriority="high"></div>
+  <div class="wrap hero__in" style="padding-block:1rem 2.4rem">
+    <nav class="crumbs"><a href="/">Главная</a><i>/</i>Стройматериалы</nav>
+    <p class="kick">База на Циолковского, 1А</p>
+    <h1 style="max-width:20ch">{{ catalog.intro.h1 }}</h1>
+    <p class="hero__sub">{{ catalog.intro.lead }}</p>
+    <div class="hero__act">
+      <button class="btn btn--fill" type="button" data-modal><span>Узнать цену и наличие</span></button>
+      <a class="btn btn--gh" href="tel:{{ site.phones.sales[0].tel }}"><span>{{ site.phones.sales[0].display }}, {{ site.phones.sales[0].name }}</span></a>
     </div>
-    <dl class="hero__facts">
-      <div><dt>Работаем</dt><dd><b>с 2000 года</b></dd></div>
-      <div><dt>Организациям</dt><dd><b>счёт и безнал</b></dd></div>
-      <div><dt>Металл и пиломатериал</dt><dd><b>распил в размер</b></dd></div>
-      <div><dt>Отзывы на Авито</dt><dd><b>128, оценка 5,0</b></dd></div>
+    <dl class="facts">
+      <div><dt>Работаем</dt><dd>с 2000 года</dd></div>
+      <div><dt>Организациям</dt><dd>счёт и безнал</dd></div>
+      <div><dt>Металл и доска</dt><dd>распил в размер</dd></div>
+      <div><dt>Отзывы на Авито</dt><dd>128, оценка 5,0</dd></div>
     </dl>
   </div>
 </section>
 
-<div class="ticker" aria-hidden="true">
-  <div class="ticker__track">
-    {% for i in range(2) %}{% for c in catalog.categories %}<span>{{ c.name }}</span>{% endfor %}{% endfor %}
-  </div>
+<div class="tick" aria-hidden="true">
+  <div class="tick__t">{% for i in range(2) %}{% for c in catalog.categories %}<span>{{ c.name }}</span>{% endfor %}{% endfor %}</div>
 </div>
 
-<section class="section section--darker">
+<section class="sec">
   <div class="wrap">
-    <div class="sec-head">
-      <p class="eyebrow">( Направления )</p>
-      <h2 class="measure">Двенадцать групп материалов под весь цикл стройки</h2>
-      <p class="measure">Скажите, что за объект и какие размеры, менеджер посчитает количество и скажет, что ещё понадобится к этой позиции.</p>
+    <div class="head">
+      <p class="kick">Направления</p>
+      <h2>Двенадцать групп материалов под весь цикл стройки</h2>
+      <p>Скажите, что за объект и какие размеры, менеджер посчитает количество и скажет, что ещё понадобится к этой позиции.</p>
     </div>
+  </div>
+  <div class="wrap">
     <div class="cat">
       {% for c in catalog.categories %}
-      <a class="cat__card reveal" href="/stroymaterialy/{{ c.slug }}/">
-        {{ icon(c.icon) }}
+      <a href="/stroymaterialy/{{ c.slug }}/">
+        <span class="cat__b">{{ '%02d' % loop.index }}</span>
         <h3>{{ c.name }}</h3>
         <ul>{% for i in c['items'][:5] %}<li>{{ i }}</li>{% endfor %}</ul>
-        <em>Узнать цену и наличие →</em>
+        <span class="lnk">Цена и наличие</span>
       </a>
       {% endfor %}
     </div>
   </div>
 </section>
 
-<section class="section section--paper">
+<section class="sec sec--lt">
   <div class="wrap">
-    <div class="sec-head">
-      <p class="eyebrow">( Что делаем сверх продажи )</p>
-      <h2 class="measure">Считаем, комплектуем и режём, чтобы бригада не теряла день</h2>
-    </div>
-    <div class="grid g-4">
+    <div class="head"><p class="kick">Что делаем сверх продажи</p><h2>Считаем, комплектуем и режем, чтобы бригада не теряла день</h2></div>
+    <div class="grid g4">
       {% for p in catalog.service_promises['items'] %}
-      <div class="reveal">
-        <div class="lightline" style="margin-bottom:1rem"></div>
-        <h3 style="margin-bottom:.6rem">{{ p.title }}</h3>
-        <p class="mut">{{ p.text }}</p>
+      <div>
+        <h3 style="margin-bottom:.4rem">{{ p.title }}</h3>
+        <p class="mut" style="font-size:var(--sm)">{{ p.text }}</p>
       </div>
       {% endfor %}
     </div>
-  </div>
-</section>
 
-<section class="section section--sand">
-  <div class="wrap">
-    <div class="sec-head">
-      <p class="eyebrow">( Про цены честно )</p>
-      <h2 class="measure">Почему цен нет на страницах, а есть в ответе менеджера</h2>
+    <div class="head" style="margin:calc(var(--sec) * .8) 0 0">
+      <p class="kick">Про цены честно</p>
+      <h2>Почему цен нет на страницах, а есть в ответе менеджера</h2>
     </div>
-    <p class="measure" style="font-size:1.08rem">{{ catalog.intro.why_no_price }}</p>
+    <p class="measure">{{ catalog.intro.why_no_price }}</p>
   </div>
 </section>
 
-<section class="section section--dark" id="zayavka">
-  <div class="wrap cta-band">
+<section class="sec" id="zayavka">
+  <div class="wrap band">
     <div>
-      <p class="eyebrow">( Запрос цены )</p>
-      <h2 style="margin-bottom:1rem">Пришлите список, посчитаем и назовём сумму</h2>
-      <div class="lightline" style="margin-bottom:1.5rem"></div>
-      <p class="measure-s mut" style="margin-bottom:1.8rem">Подойдёт любой вид: список позиций, размеры объекта, фотография чужой сметы или проекта. Посчитаем количество и пришлём цену с наличием.</p>
-      <ul class="worklist" style="grid-template-columns:1fr">
+      <p class="kick">Запрос цены</p>
+      <h2 style="margin-bottom:.7rem">Пришлите список, посчитаем и назовём сумму</h2>
+      <p class="measure-s mut" style="margin-bottom:1.4rem">Подойдёт любой вид: список позиций, размеры объекта, фотография чужой сметы или проекта.</p>
+      <ul class="chk">
         <li>Счёт для организаций, оплата на расчётный счёт</li>
         <li>Реквизиты ИП открыты на сайте</li>
         <li>Сертификаты на материалы по запросу</li>
         <li>Самовывоз с базы на Циолковского, 1А</li>
       </ul>
     </div>
-    {{ form_block('cat', 'Узнать цену и наличие', 'Напишите, что нужно и на какой объект. Менеджер посчитает количество и назовёт цену на сегодня.', 'Отправить запрос', 'Каталог материалов') }}
+    {{ form_block('c', 'Узнать цену и наличие', 'Напишите, что нужно и на какой объект. Менеджер посчитает количество и назовёт цену на сегодня.', 'Отправить запрос', 'Каталог материалов') }}
   </div>
 </section>
 {% endblock %}
