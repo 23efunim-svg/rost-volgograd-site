@@ -1,5 +1,6 @@
 {% extends "base.html.j2" %}
 {% from "_macros.html.j2" import form_block %}
+{% from "_icons.html.j2" import ic %}
 
 {% block content %}
 <section class="hero" style="min-height:auto">
@@ -39,6 +40,7 @@
       {% for c in catalog.categories %}
       <a href="/stroymaterialy/{{ c.slug }}/">
         <span class="cat__b">{{ '%02d' % loop.index }}</span>
+        {{ ic(c.icon, 'ic--l') }}
         <h3>{{ c.name }}</h3>
         <ul>{% for i in c['items'][:5] %}<li>{{ i }}</li>{% endfor %}</ul>
         <span class="lnk">Цена и наличие</span>

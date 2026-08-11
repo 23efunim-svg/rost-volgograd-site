@@ -1,5 +1,6 @@
 {% extends "base.html.j2" %}
 {% from "_macros.html.j2" import form_block %}
+{% from "_icons.html.j2" import ic %}
 {% set h = content.home %}
 
 {% block content %}
@@ -10,6 +11,7 @@
     <img src="/assets/photo/objects/simonova/simonova-08.webp"
          alt="Квартира после ремонта, выполненного компанией РОСТ в Волгограде"
          width="1200" height="1600" fetchpriority="high">
+    <video class="hero__vid" data-hero-video="/assets/video/hero.mp4" muted loop playsinline preload="none" aria-hidden="true"></video>
   </div>
   <div class="wrap hero__in">
 
@@ -35,6 +37,7 @@
       <input type="hidden" name="source" value="Квиз на первом экране">
       <input type="hidden" name="page" value="" data-page>
       <input type="hidden" name="ts" value="" data-ts>
+      <input type="hidden" name="utm" value="" data-utm>
       <input type="hidden" name="note" value="" data-quiz-note>
       <div class="hp" aria-hidden="true"><label>Не заполняйте это поле<input type="text" name="company" tabindex="-1" autocomplete="off"></label></div>
 
@@ -91,6 +94,17 @@
   <div class="tick__t">{% for i in range(2) %}{% for t in h.ticker %}<span>{{ t }}</span>{% endfor %}{% endfor %}</div>
 </div>
 
+<!-- лента доверия -->
+<div class="wrap">
+  <div class="trust">
+    <span>{{ ic('doc') }} Договор, акты и чеки</span>
+    <span>{{ ic('shield') }} Гарантия 12 месяцев</span>
+    <span>{{ ic('wallet') }} Смета до начала работ</span>
+    <span>{{ ic('truck') }} Материалы со своей базы</span>
+    <span>{{ ic('star') }} 128 отзывов на Авито, оценка 5,0</span>
+  </div>
+</div>
+
 <!-- два направления: широкие полосы -->
 <section class="sec">
   <div class="wrap">
@@ -106,7 +120,7 @@
       {% for c in h.duo.cards %}
       <a class="dir__i rv" href="{{ c.url }}">
         {% if loop.index0 == 0 %}
-        <div class="dir__ph"><img src="{{ dimg[0] }}" alt="" loading="lazy" width="1200" height="1600"></div>
+        <div class="dir__ph"><img data-prlx="0.05" src="{{ dimg[0] }}" alt="" loading="lazy" width="1200" height="1600"></div>
         <div class="dir__tx">
           <span class="dir__n">{{ c.num }}</span>
           <h3>{{ c.title }}</h3>
@@ -122,7 +136,7 @@
           <div class="dir__l">{% for t in c.tags %}<i>{{ t }}</i>{% endfor %}</div>
           <span class="lnk">{{ c.cta }}</span>
         </div>
-        <div class="dir__ph"><img src="{{ dimg[1] }}" alt="" loading="lazy" width="1200" height="1600"></div>
+        <div class="dir__ph"><img data-prlx="0.05" src="{{ dimg[1] }}" alt="" loading="lazy" width="1200" height="1600"></div>
         {% endif %}
       </a>
       {% endfor %}
@@ -136,7 +150,7 @@
     <div class="head"><p class="kick">{{ h.nums.eyebrow }}</p><h2>{{ h.nums.h2 }}</h2></div>
     <div class="nums">
       {% for n in h.nums['items'] %}
-      <div><b>{{ n.b }}</b><span>{{ n.s }}</span><small>{{ n.note }}</small></div>
+      <div><b{% if n.count %} data-count="{{ n.count }}" data-pre="{{ n.pre|default('') }}" data-suf="{{ n.suf|default('') }}"{% endif %}>{{ n.b }}</b><span>{{ n.s }}</span><small>{{ n.note }}</small></div>
       {% endfor %}
     </div>
   </div>
@@ -154,6 +168,7 @@
       {% for s in services.services %}
       <a href="/uslugi/{{ s.slug }}/">
         <span class="svc__n">{{ '%02d' % loop.index }}</span>
+        <span class="svc__ic">{{ ic(svc_icons[s.slug]) }}</span>
         <span class="svc__t">{{ s.nav }}<s>{{ s.works[:3] | join(', ') | lower }}</s></span>
         <span class="svc__p">{% if s.price_ref == 'remont' %}от 7 000 ₽/м²{% else %}цена после замера{% endif %}</span>
       </a>
@@ -249,6 +264,7 @@
       {% for c in catalog.categories[:8] %}
       <a href="/stroymaterialy/{{ c.slug }}/">
         <span class="cat__b">{{ '%02d' % loop.index }}</span>
+        {{ ic(c.icon, 'ic--l') }}
         <h3>{{ c.name }}</h3>
         <ul>{% for i in c['items'][:4] %}<li>{{ i }}</li>{% endfor %}</ul>
         <span class="lnk">Цена и наличие</span>
@@ -258,6 +274,27 @@
   </div>
   <div class="wrap" style="margin-top:1.3rem">
     <a class="btn btn--gh" href="/stroymaterialy/"><span>Все 12 направлений</span></a>
+  </div>
+</section>
+
+<!-- почему так, с иконками -->
+<section class="sec">
+  <div class="wrap">
+    <div class="head">
+      <p class="kick">Как это устроено</p>
+      <h2>Шесть вещей, из которых складывается результат</h2>
+      <p>Ничего необычного: просто каждая из них записана в договор или проверяется до начала работ.</p>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="adv">
+      <div class="rv">{{ ic('ruler') }}<div><h3>Замер и смета до старта</h3><p>Приезжаем, снимаем размеры, смотрим коммуникации. Цену по каждой позиции вы видите до начала работ.</p></div></div>
+      <div class="rv">{{ ic('doc') }}<div><h3>Договор с составом работ</h3><p>Что делаем, в какой срок и за какие деньги. Работы сверх сметы согласуются отдельно.</p></div></div>
+      <div class="rv">{{ ic('shield') }}<div><h3>Гарантия 12 месяцев</h3><p>Срок записан в договоре, а не сказан на словах. Сертификаты на материалы передаём вместе с актами.</p></div></div>
+      <div class="rv">{{ ic('truck') }}<div><h3>Материалы со своей базы</h3><p>Считаем количество под объект, везём с Циолковского. Работа не встаёт в ожидании поставки.</p></div></div>
+      <div class="rv">{{ ic('wallet') }}<div><h3>Работа с организациями</h3><p>Счёт, безнал, накладная и закрывающие документы. Реквизиты ИП открыты на сайте.</p></div></div>
+      <div class="rv">{{ ic('pin') }}<div><h3>Волгоград и область</h3><p>Компания работает с 2000 года, база и офис на Циолковского, 1А. Приезжайте посмотреть материал.</p></div></div>
+    </div>
   </div>
 </section>
 

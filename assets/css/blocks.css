@@ -7,7 +7,16 @@
    Собран по референсам заказчика: фон размыт и затемнён (remontvspb),
    правую половину занимает квиз-форма (iconinteriors), низ блока скруглён (chotko).
    Обязан помещаться в один экран с учётом шапки, проверено на 1366×768. */
-.hero { position: relative; overflow: hidden; border-radius: 0 0 clamp(18px, 2.6vw, 44px) clamp(18px, 2.6vw, 44px); }
+.hero {
+  position: relative; overflow: hidden;
+  border-radius: 0 0 clamp(18px, 2.6vw, 44px) clamp(18px, 2.6vw, 44px);
+  /* фон первого экрана всегда тёмное фото, поэтому цвета тут не зависят от темы */
+  --tx: #E8E5DF; --tx-mut: #C9C6C0; --tx-dim: #9C9992;
+  --ln: rgba(255,255,255,.16); --ln-2: rgba(255,255,255,.09);
+  --brass: #C9A672; --brass-lt: #DCC08F; --bg: #0D0D0E;
+  color: var(--tx);
+}
+.hero h1, .hero h2, .hero h3 { color: var(--tx); }
 .hero__bg { position: absolute; top: -10px; left: -10px; width: calc(100% + 20px); height: calc(100% + 20px); z-index: 0; }
 .hero__bg img { width: 100%; height: 100%; object-fit: cover; filter: blur(5px) brightness(.42); }
 @media (max-width: 860px) { .hero__bg img { filter: blur(0) brightness(.5); } }
@@ -332,3 +341,75 @@
 .tags a { color: var(--tx-mut); border-bottom: 1px solid transparent; transition: .2s; }
 .tags a:hover { color: var(--brass); border-bottom-color: var(--brass); }
 .sec--lt .tags a { color: var(--tx-dark-m); }
+
+/* ================= ДОБАВЛЕНО: интерактив и медиа ================= */
+
+/* ---- кнопка «наверх» ---- */
+.up {
+  position: fixed; right: 1.1rem; bottom: 1.4rem; z-index: 65;
+  width: 40px; height: 40px; display: grid; place-items: center;
+  border: 1px solid var(--ln); border-radius: 2px;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(10px); color: var(--tx-mut); cursor: pointer;
+  opacity: 0; visibility: hidden; transform: translateY(8px);
+  transition: opacity .3s, transform .3s, visibility .3s, color .2s, border-color .2s;
+}
+.up.on { opacity: 1; visibility: visible; transform: none; }
+.up:hover { color: var(--brass); border-color: var(--brass); }
+.up svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.8; }
+@media (max-width: 700px) { .up { bottom: 64px; right: .8rem; width: 36px; height: 36px; } }
+
+/* ---- фоновое видео первого экрана ----
+   Грузится только на широком экране и при быстром соединении, иначе остаётся фото. */
+.hero__vid { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  filter: blur(4px) brightness(.4); opacity: 0; transition: opacity 1.2s ease; }
+.hero__vid.on { opacity: 1; }
+@media (max-width: 860px) { .hero__vid { display: none; } }
+@media (prefers-reduced-motion: reduce) { .hero__vid { display: none; } }
+
+/* ---- иконки ---- */
+.ic { width: 20px; height: 20px; flex: 0 0 auto; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.ic--l { width: 26px; height: 26px; stroke-width: 1.4; }
+
+/* услуги с иконкой в строке */
+.svc a { grid-template-columns: 2.2rem 1.6rem 1fr auto; }
+.svc__ic { color: var(--brass-dk); }
+.svc a:hover .svc__ic { color: var(--brass-lt); }
+@media (max-width: 620px) {
+  .svc a { grid-template-columns: 1.5rem 1.4rem 1fr; }
+  .svc__p { grid-column: 3; }
+}
+
+/* иконка в карточке каталога */
+.cat a > .ic { color: var(--brass); margin-bottom: .1rem; }
+
+/* ---- преимущества с иконками: строки, не карточки ---- */
+.adv { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--ln); border-block: 1px solid var(--ln); }
+@media (max-width: 900px) { .adv { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .adv { grid-template-columns: 1fr; } }
+.adv > div { background: var(--bg); padding: 1.2rem 1.3rem 1.3rem; display: flex; gap: .85rem; }
+.sec--alt .adv > div { background: var(--bg-2); }
+.adv .ic { color: var(--brass); margin-top: .15rem; }
+.adv h3 { font-size: var(--body); margin-bottom: .25rem; }
+.adv p { font-size: var(--sm); color: var(--tx-mut); }
+
+/* ---- счётчики: цифра анимируется ---- */
+.nums b[data-count] { font-variant-numeric: tabular-nums; }
+
+/* ---- лайтбокс галереи ---- */
+.lb { position: fixed; inset: 0; z-index: 95; display: none; place-items: center; padding: 1.5rem;
+      background: rgba(6,6,7,.94); backdrop-filter: blur(4px); }
+.lb.on { display: grid; }
+.lb img, .lb video { max-width: min(1200px, 92vw); max-height: 86vh; width: auto; height: auto; }
+.lb__x { position: absolute; top: 1rem; right: 1.2rem; width: 40px; height: 40px; border: 1px solid var(--ln);
+         background: transparent; color: var(--tx); font-size: 1.4rem; cursor: pointer; border-radius: 2px; }
+.lb__n { position: absolute; bottom: 1.2rem; left: 0; right: 0; text-align: center; font-size: var(--xs); color: var(--tx-mut); }
+.gal figure { cursor: zoom-in; }
+
+/* ---- параллакс на фото ---- */
+[data-prlx] { will-change: transform; }
+
+/* ---- лента доверия под первым экраном ---- */
+.trust { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1.6rem; padding-block: .9rem; border-bottom: 1px solid var(--ln); }
+.trust span { display: inline-flex; align-items: center; gap: .5rem; font-size: var(--xs); color: var(--tx-mut); }
+.trust .ic { width: 15px; height: 15px; color: var(--brass); }

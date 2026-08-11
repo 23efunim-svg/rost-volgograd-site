@@ -1,5 +1,6 @@
 {% extends "base.html.j2" %}
 {% from "_macros.html.j2" import form_block %}
+{% from "_icons.html.j2" import ic %}
 
 {% block content %}
 <section class="sec pgh" style="padding-bottom:calc(var(--sec) * .6)">
@@ -17,6 +18,7 @@
       {% for s in services.services %}
       <a href="/uslugi/{{ s.slug }}/">
         <span class="svc__n">{{ '%02d' % loop.index }}</span>
+        <span class="svc__ic">{{ ic(svc_icons[s.slug]) }}</span>
         <span class="svc__t">{{ s.nav }}<s>{{ s.works[:4] | join(', ') | lower }}</s></span>
         <span class="svc__p">{% if s.price_ref == 'remont' %}от 7 000 ₽/м²{% else %}цена после замера{% endif %}</span>
       </a>

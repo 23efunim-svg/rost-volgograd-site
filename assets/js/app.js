@@ -7,6 +7,142 @@
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
 
+  /* ---------- цели Метрики ----------
+     Вызываются на каждое целевое действие. Если счётчик не подключён, молчат. */
+  function goal(name, params) {
+    try { if (window.ym && window.__ymId) window.ym(window.__ymId, 'reachGoal', name, params || {}); } catch (e) {}
+  }
+  window.rostGoal = goal;
+
+  /* ---------- тема: день и ночь ----------
+     Выбор пользователя важнее системного, поэтому храним его отдельно. */
+  var THEME_KEY = 'rost_theme';
+  var root = document.documentElement;
+  function applyTheme(t) {
+    if (t === 'light') root.setAttribute('data-theme', 'light');
+    else root.removeAttribute('data-theme');
+  }
+  (function () {
+    var saved = null;
+    try { saved = localStorage.getItem(THEME_KEY); } catch (e) {}
+    if (saved) applyTheme(saved);
+    else if (window.matchMedia && matchMedia('(prefers-color-scheme: light)').matches) applyTheme('light');
+  })();
+  $$('[data-theme-toggle]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+      applyTheme(next);
+      try { localStorage.setItem(THEME_KEY, next); } catch (e) {}
+      goal('theme_switch', { to: next });
+    });
+  });
+
+  /* ---------- скролл: прогресс чтения, тень шапки, кнопка наверх, параллакс ---------- */
+  var hdr = $('.hdr'), prog = $('[data-prog]'), up = $('[data-up]'), scrolled = false;
+  var prlx = $$('[data-prlx]');
+  function onScroll() {
+    var y = window.scrollY || window.pageYOffset;
+    if (prog) {
+      var docH = document.documentElement.scrollHeight - window.innerHeight;
+      prog.style.width = (docH > 0 ? Math.min(100, Math.max(0, y / docH * 100)) : 0) + '%';
+    }
+    if (hdr) {
+      // гистерезис, иначе тень мигает на границе
+      if (!scrolled && y > 90) { scrolled = true; hdr.classList.add('is-scrolled'); }
+      else if (scrolled && y < 40) { scrolled = false; hdr.classList.remove('is-scrolled'); }
+    }
+    if (up) up.classList.toggle('on', y > 700);
+    if (prlx.length) {
+      var vh = window.innerHeight || 800;
+      prlx.forEach(function (el) {
+        var k = parseFloat(el.getAttribute('data-prlx')) || 0;
+        var r = el.getBoundingClientRect();
+        el.style.transform = 'translate3d(0,' + (((r.top + r.height / 2) - vh / 2) * -k).toFixed(1) + 'px,0)';
+      });
+    }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  onScroll();
+  if (up) up.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    goal('scroll_up');
+  });
+
+  /* ---------- счётчики цифр ---------- */
+  function animateCount(el) {
+    var to = parseFloat(el.getAttribute('data-count')) || 0;
+    if (to <= 0) return;
+    var pre = el.getAttribute('data-pre') || '', suf = el.getAttribute('data-suf') || '';
+    var st = null, dur = 1500;
+    function step(ts) {
+      if (!st) st = ts;
+      var p = Math.min((ts - st) / dur, 1);
+      el.textContent = pre + Math.round(to * (1 - Math.pow(1 - p, 3))).toLocaleString('ru-RU') + suf;
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  var counters = $$('[data-count]');
+  if (counters.length) {
+    if ('IntersectionObserver' in window) {
+      var cio = new IntersectionObserver(function (es) {
+        es.forEach(function (en) { if (en.isIntersecting) { animateCount(en.target); cio.unobserve(en.target); } });
+      }, { threshold: 0.4 });
+      counters.forEach(function (el) { cio.observe(el); });
+      // страховка: если наблюдатель не сработал, показываем итоговые числа
+      setTimeout(function () { counters.forEach(function (el) { if (!el.textContent.trim()) animateCount(el); }); }, 4000);
+    } else {
+      counters.forEach(animateCount);
+    }
+  }
+
+  /* ---------- лайтбокс галереи ---------- */
+  var lb = $('[data-lb]');
+  if (lb) {
+    var lbImg = $('[data-lb-img]', lb), lbNum = $('[data-lb-num]', lb);
+    var figs = $$('.gal figure'), idx = 0;
+    var openLb = function (i) {
+      idx = (i + figs.length) % figs.length;
+      var im = figs[idx].querySelector('img');
+      lbImg.src = im.getAttribute('data-full') || im.src;
+      lbImg.alt = im.alt || '';
+      if (lbNum) lbNum.textContent = (idx + 1) + ' из ' + figs.length + '. Стрелки листают, Esc закрывает';
+      lb.classList.add('on');
+      document.documentElement.style.overflow = 'hidden';
+    };
+    var closeLb = function () { lb.classList.remove('on'); document.documentElement.style.overflow = ''; };
+    figs.forEach(function (f, i) { f.addEventListener('click', function () { openLb(i); goal('gallery_open'); }); });
+    $$('[data-lb-x]', lb).forEach(function (b) { b.addEventListener('click', closeLb); });
+    lb.addEventListener('click', function (e) { if (e.target === lb) closeLb(); });
+    document.addEventListener('keydown', function (e) {
+      if (!lb.classList.contains('on')) return;
+      if (e.key === 'Escape') closeLb();
+      if (e.key === 'ArrowRight') openLb(idx + 1);
+      if (e.key === 'ArrowLeft') openLb(idx - 1);
+    });
+  }
+
+  /* ---------- фоновое видео первого экрана ----------
+     Не грузим на узком экране, при экономии трафика и на медленном соединении. */
+  (function () {
+    var v = $('[data-hero-video]');
+    if (!v) return;
+    var conn = navigator.connection || {};
+    var slow = conn.saveData || /2g/.test(conn.effectiveType || '');
+    if (slow || window.innerWidth < 861) return;
+    if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    v.src = v.getAttribute('data-hero-video');
+    var pr = v.play();
+    if (pr && pr.then) pr.then(function () { v.classList.add('on'); }).catch(function () {});
+  })();
+
+  /* ---------- клики по телефону и мессенджерам в цели ---------- */
+  $$('a[href^="tel:"]').forEach(function (a) { a.addEventListener('click', function () { goal('phone_click'); }); });
+  $$('a[href*="vk.ru"], a[href*="max.ru"]').forEach(function (a) {
+    a.addEventListener('click', function () { goal('messenger', { type: a.href.indexOf('max.ru') > -1 ? 'max' : 'vk' }); });
+  });
+
   /* ---------- мобильное меню ---------- */
   var brg = $('[data-brg]'), mnav = $('[data-mnav]');
   if (brg && mnav) {
@@ -184,6 +320,21 @@
     var p = form.querySelector('[data-page]'), t = form.querySelector('[data-ts]');
     if (p) p.value = location.pathname + location.search;
     if (t) t.value = String(Date.now());
+    var u = form.querySelector('[data-utm]');
+    if (u) {
+      // метки рекламы держим весь визит: человек может уйти на другую страницу и вернуться
+      var qs = new URLSearchParams(location.search), keep = [];
+      ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'yclid', 'gclid'].forEach(function (k) {
+        if (qs.get(k)) keep.push(k + '=' + qs.get(k));
+      });
+      var saved = '';
+      try {
+        if (keep.length) sessionStorage.setItem('rost_utm', keep.join('&'));
+        saved = sessionStorage.getItem('rost_utm') || '';
+      } catch (e) { saved = keep.join('&'); }
+      var ref = document.referrer ? 'ref: ' + document.referrer.slice(0, 180) : '';
+      u.value = [saved, ref].filter(Boolean).join(' | ');
+    }
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -204,6 +355,15 @@
         return;
       }
 
+      if (window.__demo) {
+        // витрина без серверной части: не делаем вид, что заявка ушла
+        if (msg) {
+          msg.className = 'msg ok';
+          msg.innerHTML = 'Это витрина для показа, заявки принимает боевой сайт. ' +
+            'Позвоните: <a href="tel:+79275286047" style="color:inherit;text-decoration:underline">+7 927 528-60-47</a>';
+        }
+        return;
+      }
       var data = new FormData(form);
       var old = lbl.textContent;
       btn.disabled = true;
@@ -214,8 +374,10 @@
         .then(function (res) {
           if (res && res.ok) {
             if (msg) { msg.className = 'msg ok'; msg.textContent = 'Заявка ушла. Менеджер перезвонит в рабочее время: будни 9:00–18:00, суббота 9:00–14:00.'; }
+            var src = (form.querySelector('[name="source"]') || {}).value || '';
+            goal('lead_any');
+            goal(/[Кк]виз/.test(src) ? 'lead_quiz' : 'lead_form', { src: src });
             form.reset();
-            if (typeof window.ym === 'function' && window.__ymId) window.ym(window.__ymId, 'reachGoal', 'lead');
           } else { throw new Error('bad'); }
         })
         .catch(function () {

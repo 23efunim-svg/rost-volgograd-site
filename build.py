@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Сборка статического сайта РОСТ из данных и шаблонов Jinja2."""
-import json, shutil, re
+import json, shutil, re, os, sys
 from pathlib import Path
 from datetime import date
 from jinja2 import Environment, FileSystemLoader, select_autoescape
@@ -10,6 +10,11 @@ DATA = ROOT / "data"
 DIST = ROOT / "dist"
 DOMAIN = "rem-opt-stroy-torg.ru"
 TODAY = date.today().isoformat()
+
+# Демо-сборка для показа на GitHub Pages: путь-префикс и форма без сервера.
+# Боевая сборка (без ключа) остаётся обычной: BASE пустой, форма шлёт на PHP.
+DEMO = "--demo" in sys.argv
+BASE = os.environ.get("SITE_BASE", "/rost-volgograd-site" if DEMO else "")
 
 
 def load(name):
@@ -41,7 +46,15 @@ env = Environment(
     autoescape=select_autoescape(["html", "j2"]),
     trim_blocks=True, lstrip_blocks=True,
 )
-env.globals.update(site=site, nav=NAV, services=services, catalog=catalog,
+# иконка на каждую услугу: имена из templates/_icons.html.j2
+SVC_ICONS = {
+    "remont-kvartir": "home", "stroitelstvo-domov": "crane", "otdelochnye-raboty": "brush",
+    "elektromontazh": "bolt", "santehnicheskie-raboty": "drop", "krovlya-i-fasady": "roof",
+    "zabory-i-blagoustroystvo": "fence", "kommercheskie-pomeshcheniya": "office",
+}
+
+env.globals.update(base=BASE, demo=DEMO, svc_icons=SVC_ICONS,
+                   site=site, nav=NAV, services=services, catalog=catalog,
                    content=content, objects=objects, objects_meta=objects_meta,
                    faq_all=FAQ_ALL, calcs=calcs_data["calcs"],
                    domain=DOMAIN, today=TODAY)
@@ -151,11 +164,19 @@ def typo(html):
     return "".join(out)
 
 
+_LINK = re.compile(r'(\s(?:href|src|action|data-full|data-hero-video)=")/(?!/)')
+
+
+def with_base(html):
+    """Префикс к внутренним путям: нужен, когда сайт живёт не в корне домена."""
+    return _LINK.sub(lambda m: m.group(1) + BASE + "/", html) if BASE else html
+
+
 def render(tpl, url, title_tag, description, jsonld, **ctx):
     out = DIST / url.strip("/") / "index.html" if url != "/" else DIST / "index.html"
     out.parent.mkdir(parents=True, exist_ok=True)
     page = {"url": url, "title_tag": title_tag, "description": description, "jsonld": jsonld}
-    html = typo(env.get_template(tpl).render(page=page, **ctx))
+    html = with_base(typo(env.get_template(tpl).render(page=page, **ctx)))
     out.write_text(html, encoding="utf-8")
     PAGES.append(url)
     print("  ", url)
@@ -310,11 +331,12 @@ def build():
            "Текст согласия на обработку персональных данных, которое даёт пользователь при отправке формы на сайте РОСТ.",
            graph(org_jsonld()), doc="consent")
 
-    # служебные файлы
+    # служебные файлы. Витрина закрыта от индексации, чтобы не конкурировать с боевым доменом
     (DIST / "robots.txt").write_text(
-        "User-agent: *\nAllow: /\n"
-        f"Sitemap: https://{DOMAIN}/sitemap.xml\n"
-        f"Host: https://{DOMAIN}\n", encoding="utf-8")
+        "User-agent: *\nDisallow: /\n" if DEMO else
+        ("User-agent: *\nAllow: /\n"
+         f"Sitemap: https://{DOMAIN}/sitemap.xml\n"
+         f"Host: https://{DOMAIN}\n"), encoding="utf-8")
 
     urls = "\n".join(
         f"  <url><loc>https://{DOMAIN}{u}</loc><lastmod>{TODAY}</lastmod>"
@@ -340,7 +362,11 @@ def build():
     shutil.rmtree(DIST / "404")
     PAGES.remove("/404")
 
-    print(f"\nГотово: {len(PAGES)} страниц в {DIST}")
+    if DEMO:
+        # GitHub Pages иначе прячет каталоги, начинающиеся с подчёркивания
+        (DIST / ".nojekyll").write_text("", encoding="utf-8")
+
+    print(f"\nГотово: {len(PAGES)} страниц в {DIST}" + (" (демо)" if DEMO else ""))
 
 
 if __name__ == "__main__":

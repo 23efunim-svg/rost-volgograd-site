@@ -37,7 +37,8 @@
     <div class="gal">
       {% for p in obj.photos %}
       <figure>
-        <img src="/assets/photo/objects/{{ slug }}/{{ p.name }}{% if loop.index > 3 %}-thumb{% endif %}.webp"
+        <img data-full="/assets/photo/objects/{{ slug }}/{{ p.name }}.webp"
+             src="/assets/photo/objects/{{ slug }}/{{ p.name }}{% if loop.index > 3 %}-thumb{% endif %}.webp"
              alt="{{ obj.title }}, фото {{ loop.index }}"
              loading="{{ 'eager' if loop.index <= 2 else 'lazy' }}"
              width="{{ p.w }}" height="{{ p.h }}">

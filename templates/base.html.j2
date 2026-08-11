@@ -1,3 +1,4 @@
+{% from "_icons.html.j2" import ic %}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -25,11 +26,19 @@
 <link rel="stylesheet" href="/assets/css/blocks.css?v={{ today }}">
 {% block head_extra %}{% endblock %}
 
+<script>
+/* тема применяется до первой отрисовки, иначе на светлой теме мелькает тёмный фон */
+(function(){try{var t=localStorage.getItem('rost_theme');
+if(!t&&window.matchMedia&&matchMedia('(prefers-color-scheme: light)').matches)t='light';
+if(t==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}})();
+</script>
+
 <script type="application/ld+json">{{ page.jsonld | safe }}</script>
 </head>
 <body>
 
 <header class="hdr">
+  <span class="hdr__prog" data-prog aria-hidden="true"></span>
   <div class="wrap hdr__row">
     <a class="lg" href="/">
       <img src="/assets/logo/mark-brass.svg" alt="РОСТ РЕМОПТСТРОЙТОРГ" width="24" height="28">
@@ -43,6 +52,9 @@
     <div class="hdr__end">
       <a class="tel" href="tel:{{ site.phones.primary.tel }}">{{ site.phones.primary.display }}<s>Пн–Пт 9:00–18:00</s></a>
       <button class="btn btn--fill" type="button" data-modal><span>Вызвать замерщика</span></button>
+      <button class="thm" type="button" data-theme-toggle aria-label="Переключить тему">
+        {{ ic('moon', 'i-moon') }}{{ ic('sun', 'i-sun') }}
+      </button>
       <button class="brg" type="button" aria-label="Меню" aria-expanded="false" data-brg><i></i><i></i><i></i></button>
     </div>
   </div>
@@ -66,9 +78,18 @@
   <button class="btn btn--fill" type="button" data-modal><span>Вызвать замерщика</span></button>
 </div>
 
+<button class="up" type="button" data-up aria-label="Наверх">{{ ic('up') }}</button>
+
+<div class="lb" data-lb role="dialog" aria-modal="true" aria-label="Просмотр фотографии">
+  <button class="lb__x" type="button" data-lb-x aria-label="Закрыть">×</button>
+  <img data-lb-img alt="" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+  <p class="lb__n" data-lb-num></p>
+</div>
+
 {% include "_footer.html.j2" %}
 {% include "_modal.html.j2" %}
 
+{% if demo %}<script>window.__demo = true;</script>{% endif %}
 <script src="/assets/js/app.js?v={{ today }}" defer></script>
 </body>
 </html>
