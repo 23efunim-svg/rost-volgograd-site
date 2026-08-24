@@ -1,0 +1,808 @@
+{
+ "arbat": {
+  "title": "Квартира на Арбате",
+  "photos": [
+   {
+    "name": "arbat-01",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "arbat-02",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "arbat-03",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "arbat-04",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "arbat-05",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "arbat-06",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "arbat-07",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "arbat-08",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "arbat-09",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "arbat-10",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "arbat-11",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "arbat-12",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   }
+  ]
+ },
+ "partizanskaya": {
+  "title": "Коттедж на Партизанской",
+  "photos": [
+   {
+    "name": "partizanskaya-01",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "partizanskaya-02",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "partizanskaya-03",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "partizanskaya-04",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "partizanskaya-05",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "partizanskaya-06",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "partizanskaya-07",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "partizanskaya-08",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "partizanskaya-09",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "partizanskaya-10",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "partizanskaya-11",
+    "w": 1600,
+    "h": 1200,
+    "orient": "h"
+   },
+   {
+    "name": "partizanskaya-12",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "partizanskaya-13",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "partizanskaya-14",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "partizanskaya-15",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "partizanskaya-16",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "partizanskaya-17",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "partizanskaya-18",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "partizanskaya-19",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "partizanskaya-20",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   }
+  ]
+ },
+ "barminy": {
+  "title": "Дом с сауной",
+  "photos": [
+   {
+    "name": "barminy-01",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "barminy-02",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "barminy-03",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "barminy-04",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "barminy-05",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "barminy-06",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "barminy-07",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "barminy-08",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "barminy-09",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "barminy-10",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "barminy-11",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "barminy-12",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   }
+  ]
+ },
+ "yantarnaya": {
+  "title": "Коттедж на Янтарной",
+  "photos": [
+   {
+    "name": "yantarnaya-01",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "yantarnaya-02",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "yantarnaya-03",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "yantarnaya-04",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "yantarnaya-05",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "yantarnaya-06",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "yantarnaya-07",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "yantarnaya-08",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "yantarnaya-09",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "yantarnaya-10",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "yantarnaya-11",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "yantarnaya-12",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "yantarnaya-13",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "yantarnaya-14",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   }
+  ]
+ },
+ "simonova": {
+  "title": "Квартира на Симонова",
+  "photos": [
+   {
+    "name": "simonova-01",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "simonova-02",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "simonova-03",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "simonova-04",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "simonova-05",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "simonova-06",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "simonova-07",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "simonova-08",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "simonova-09",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "simonova-10",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "simonova-11",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "simonova-12",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "simonova-13",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   }
+  ]
+ },
+ "kim": {
+  "title": "Квартира на Ким",
+  "photos": [
+   {
+    "name": "kim-01",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "kim-02",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "kim-03",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "kim-04",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "kim-05",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "kim-06",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "kim-07",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "kim-08",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "kim-09",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "kim-10",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "kim-11",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "kim-12",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "kim-13",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "kim-14",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   }
+  ]
+ },
+ "nevskaya": {
+  "title": "Квартира на Невской",
+  "photos": [
+   {
+    "name": "nevskaya-01",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "nevskaya-02",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "nevskaya-03",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "nevskaya-04",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "nevskaya-05",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "nevskaya-06",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "nevskaya-07",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "nevskaya-08",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "nevskaya-09",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "nevskaya-10",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "nevskaya-11",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "nevskaya-12",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   }
+  ]
+ },
+ "borby": {
+  "title": "Квартира на Борьбы",
+  "photos": [
+   {
+    "name": "borby-01",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "borby-02",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "borby-03",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "borby-04",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "borby-05",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "borby-06",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "borby-07",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "borby-08",
+    "w": 1600,
+    "h": 1200,
+    "orient": "h"
+   },
+   {
+    "name": "borby-09",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "borby-10",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "borby-11",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "borby-12",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   }
+  ]
+ },
+ "goryachevodskaya": {
+  "title": "Квартира на Горячеводской",
+  "photos": [
+   {
+    "name": "goryachevodskaya-01",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "goryachevodskaya-02",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "goryachevodskaya-03",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "goryachevodskaya-04",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "goryachevodskaya-05",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "goryachevodskaya-06",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "goryachevodskaya-07",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "goryachevodskaya-08",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "goryachevodskaya-09",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "goryachevodskaya-10",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "goryachevodskaya-11",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   }
+  ]
+ },
+ "lipetskaya": {
+  "title": "Квартира на Липецкой",
+  "photos": [
+   {
+    "name": "lipetskaya-01",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "lipetskaya-02",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "lipetskaya-03",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "lipetskaya-04",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "lipetskaya-05",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   },
+   {
+    "name": "lipetskaya-06",
+    "w": 1200,
+    "h": 1600,
+    "orient": "v"
+   }
+  ]
+ }
+}
