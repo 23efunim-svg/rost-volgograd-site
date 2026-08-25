@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://23efunim-svg.github.io/rost-volgograd-site/v1/sitemap.xml

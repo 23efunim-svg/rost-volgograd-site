@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg">
+  <symbol id="tools" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m5 19 6-6m2-2 4-4m-8-4 3 3-3 3-3-3zM14 14l5 5m-2-7 4 4-3 3-4-4z"/>
+  </symbol>
+  <symbol id="materials" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 17h18M5 13h12v4H5zM7 9h12v4H7zM9 5h10v4H9z"/><circle cx="5" cy="7" r="2"/>
+  </symbol>
+
+  <symbol id="remont-kvartir" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 20V4h16v16M8 20v-7h6v7M8 8h8M17 9v6m-2-4h4"/>
+  </symbol>
+  <symbol id="stroitelstvo-domov" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m3 11 9-7 9 7M5 10v10h14V10M9 20v-6h6v6"/>
+  </symbol>
+  <symbol id="otdelochnye-raboty" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m4 17 12-7 4 2-12 7zM7 15l-2-4 8-5 3 4M10 19l1 2"/>
+  </symbol>
+  <symbol id="elektromontazh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m13 2-6 11h5l-1 9 6-12h-5zM4 6H2m20 0h-2M5 19l-2 2m16-2 2 2"/>
+  </symbol>
+  <symbol id="santehnicheskie-raboty" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 4v7h8v4h6M3 4h4M3 11h4m12 4v3m-2 0h4"/><path d="M13 7c2 0 3-1 3-3"/>
+  </symbol>
+  <symbol id="krovlya-i-fasady" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m3 12 9-8 9 8M6 11v9h12v-9M8 15h8M8 18h8"/>
+  </symbol>
+  <symbol id="zabory-i-blagoustroystvo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 21V5l2-2 2 2v16M16 21V5l2-2 2 2v16M8 8h8M8 17h8M12 8v9"/>
+  </symbol>
+  <symbol id="kommercheskie-pomeshcheniya" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 21V5h10v16M14 9h6v12M8 9h2m-2 4h2m-2 4h2m9-4h-2m2 4h-2M2 21h20"/>
+  </symbol>
+
+  <symbol id="elektrika" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="9" cy="13" r="6"/><circle cx="9" cy="13" r="2.5"/><path d="M15 13h3v-3m0 0h3m-3 0V7m3 7v4h-4"/>
+  </symbol>
+  <symbol id="santehnika" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 4v7h9v8h7M2 4h4M2 11h4M13 15h7M17 5v6m-3-3h6"/>
+  </symbol>
+  <symbol id="krovlya" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 17 10 5h11l-7 12zM7 17l7-12m-3 12 7-12M5 13h11M7 9h11"/>
+  </symbol>
+  <symbol id="metalloprokat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="7" cy="7" r="3"/><circle cx="17" cy="7" r="3"/><path d="M4 14h16v6H4zM8 14v6m8-6v6"/>
+  </symbol>
+  <symbol id="utepliteli" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 7h18v10H3zM6 10c1.5-1.5 2.5-1.5 4 0s2.5 1.5 4 0 2.5-1.5 4 0M6 14c1.5-1.5 2.5-1.5 4 0s2.5 1.5 4 0 2.5-1.5 4 0"/>
+  </symbol>
+  <symbol id="listovye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 4h14v11H5zM3 8v11h14M7 15v4"/>
+  </symbol>
+  <symbol id="smesi-i-lkm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M6 7h12l-1 13H7zM8 7V4h8v3M9 12h6M9 16h4"/>
+  </symbol>
+  <symbol id="otdelka" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 4h8v7H3zM13 4h8v4h-8zM13 10h8v10h-8zM3 13h8v7H3z"/>
+  </symbol>
+  <symbol id="fasad-i-zabor" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 21V6l3-3 3 3v15M14 21V6l3-3 3 3v15M10 9h4M10 17h4"/>
+  </symbol>
+  <symbol id="krepezh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m5 5 14 14M7 3l4 4-4 4-4-4zM13 15l2-2m0 4 2-2m0 4 2-2"/>
+  </symbol>
+  <symbol id="pilomaterialy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 7h18v10H3z"/><circle cx="8" cy="12" r="2"/><path d="M13 10h5m-5 4h4"/>
+  </symbol>
+  <symbol id="bloki-i-nerudnye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 5h8v6H3zM13 5h8v6h-8zM7 13h10v6H7zM3 13h2m14 0h2"/>
+  </symbol>
+</svg>
